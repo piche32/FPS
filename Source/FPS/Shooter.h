@@ -6,6 +6,9 @@
 #include "GameFramework/Character.h"
 #include "Shooter.generated.h"
 
+class UInputMappingContext;
+class UInputAction;
+struct FInputActionValue;
 
 UCLASS()
 class FPS_API AShooter : public ACharacter
@@ -27,4 +30,15 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+private:
+	APlayerController* PlayerController;
+
+	UPROPERTY(EditAnywhere, Category = Input)
+	UInputMappingContext* DefaultMappingContext;
+
+	UPROPERTY(EditAnywhere, Category = Input)
+	UInputAction* MoveAction;
+
+	void Move(const FInputActionValue& InputActionValue);
 };
+
