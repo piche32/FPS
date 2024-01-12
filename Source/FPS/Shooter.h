@@ -8,6 +8,7 @@
 
 class UInputMappingContext;
 class UInputAction;
+class AGun;
 struct FInputActionValue;
 
 UCLASS()
@@ -47,4 +48,10 @@ private:
 
 	void Move(const FInputActionValue &InputActionValue);
 	void Look(const FInputActionValue &InputActionValue);
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AGun> GunClass;
+
+	UPROPERTY()
+	AGun *Gun;
 };
