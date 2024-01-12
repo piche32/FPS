@@ -43,6 +43,7 @@ void AShooter::SetupPlayerInputComponent(UInputComponent *PlayerInputComponent)
 	if (UEnhancedInputComponent *Input = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
 		Input->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AShooter::Move);
+		Input->BindAction(LookAction, ETriggerEvent::Triggered, this, &AShooter::Look);
 	}
 }
 
@@ -63,5 +64,15 @@ void AShooter::Move(const FInputActionValue &InputActionValue)
 			const FVector MovementDirection = MovementRotation.RotateVector(FVector::ForwardVector);
 			AddMovementInput(MovementDirection, Value.Y);
 		}
+	}
+}
+
+void AShooter::Look(const FInputActionValue &InputActionValue)
+{
+	const FVector2D LookAxisValue = InputActionValue.Get<FVector2D>();
+	if (PlayerController)
+	{
+		AddControllerYawInput(LookAxisValue.X);
+		AddControllerPitchInput(LookAxisValue.Y);
 	}
 }

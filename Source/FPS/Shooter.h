@@ -23,22 +23,25 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	virtual void SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent) override;
 
 private:
-	APlayerController* PlayerController;
+	APlayerController *PlayerController;
 
 	UPROPERTY(EditAnywhere, Category = Input)
-	UInputMappingContext* DefaultMappingContext;
+	UInputMappingContext *DefaultMappingContext;
 
 	UPROPERTY(EditAnywhere, Category = Input)
-	UInputAction* MoveAction;
+	UInputAction *MoveAction;
 
-	void Move(const FInputActionValue& InputActionValue);
+	UPROPERTY(EditAnywhere, Category = Input)
+	UInputAction *LookAction;
+
+	void Move(const FInputActionValue &InputActionValue);
+	void Look(const FInputActionValue &InputActionValue);
 };
-
