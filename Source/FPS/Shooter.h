@@ -42,6 +42,9 @@ private:
 	UPROPERTY(EditAnywhere, Category = Input)
 	UInputAction *LookAction;
 
+	UPROPERTY(EditAnywhere, Category = Input)
+	UInputAction *JumpAction;
+
 	void Move(const FInputActionValue &InputActionValue);
 	void Look(const FInputActionValue &InputActionValue);
 };

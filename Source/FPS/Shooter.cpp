@@ -44,6 +44,7 @@ void AShooter::SetupPlayerInputComponent(UInputComponent *PlayerInputComponent)
 	{
 		Input->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AShooter::Move);
 		Input->BindAction(LookAction, ETriggerEvent::Triggered, this, &AShooter::Look);
+		Input->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ACharacter::Jump);
 	}
 }
 
