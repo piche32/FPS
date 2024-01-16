@@ -2,7 +2,7 @@
 
 #include "Gun.h"
 #include "Components/SkeletalMeshComponent.h"
-#include "Kismet/GameplayStatics.h"
+#include "NiagaraFunctionLibrary.h"
 
 // Sets default values
 AGun::AGun()
@@ -20,7 +20,7 @@ void AGun::PullTrigger()
 {
 	if (MuzzleFlash)
 	{
-		UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, Mesh, TEXT("b_gun_muzzleflash"));
+		UNiagaraFunctionLibrary::SpawnSystemAttached(MuzzleFlash, Mesh, TEXT("b_gun_muzzleflash"), FVector(0.f), FRotator(90.0f), EAttachLocation::Type::KeepRelativeOffset, true);
 	}
 }
 

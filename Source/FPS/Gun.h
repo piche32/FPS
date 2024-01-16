@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "Gun.generated.h"
 
+class UNiagaraSystem;
+
 UCLASS()
 class FPS_API AGun : public AActor
 {
@@ -32,6 +34,6 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	USkeletalMeshComponent *Mesh;
 
-	UPROPERTY(EditAnywhere)
-	UParticleSystem *MuzzleFlash;
+	UPROPERTY(EditAnywhere, Category = "Firing")
+	UNiagaraSystem *MuzzleFlash;
 };
