@@ -1,7 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Gun.h"
-#include "Components/StaticMeshComponent.h"
+#include "Components/SkeletalMeshComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AGun::AGun()
@@ -13,6 +14,14 @@ AGun::AGun()
 	SetRootComponent(Root);
 	Mesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
 	Mesh->SetupAttachment(Root);
+}
+
+void AGun::PullTrigger()
+{
+	if (MuzzleFlash)
+	{
+		UGameplayStatics::SpawnEmitterAttached(MuzzleFlash, Mesh, TEXT("b_gun_muzzleflash"));
+	}
 }
 
 // Called when the game starts or when spawned

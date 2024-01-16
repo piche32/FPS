@@ -38,6 +38,9 @@ private:
 	UInputMappingContext *DefaultMappingContext;
 
 	UPROPERTY(EditAnywhere, Category = Input)
+	UInputMappingContext *ShooterMappingContext;
+
+	UPROPERTY(EditAnywhere, Category = Input)
 	UInputAction *MoveAction;
 
 	UPROPERTY(EditAnywhere, Category = Input)
@@ -46,8 +49,12 @@ private:
 	UPROPERTY(EditAnywhere, Category = Input)
 	UInputAction *JumpAction;
 
+	UPROPERTY(EditAnywhere, Category = Input)
+	UInputAction *ShootAction;
+
 	void Move(const FInputActionValue &InputActionValue);
 	void Look(const FInputActionValue &InputActionValue);
+	void Shoot(const FInputActionValue &InputActionValue);
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<AGun> GunClass;

@@ -26,6 +26,7 @@ void AShooter::BeginPlay()
 		if (UEnhancedInputLocalPlayerSubsystem *Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
 		{
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
+			Subsystem->AddMappingContext(ShooterMappingContext, 1);
 		}
 	}
 
@@ -50,6 +51,7 @@ void AShooter::SetupPlayerInputComponent(UInputComponent *PlayerInputComponent)
 		Input->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AShooter::Move);
 		Input->BindAction(LookAction, ETriggerEvent::Triggered, this, &AShooter::Look);
 		Input->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ACharacter::Jump);
+		Input->BindAction(ShootAction, ETriggerEvent::Triggered, this, &AShooter::Shoot);
 	}
 }
 
@@ -80,5 +82,13 @@ void AShooter::Look(const FInputActionValue &InputActionValue)
 	{
 		AddControllerYawInput(LookAxisValue.X);
 		AddControllerPitchInput(LookAxisValue.Y);
+	}
+}
+
+void AShooter::Shoot(const FInputActionValue &InputActionValue)
+{
+	if (Gun)
+	{
+		Gun->PullTrigger();
 	}
 }
