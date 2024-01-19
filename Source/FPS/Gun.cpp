@@ -52,7 +52,6 @@ void AGun::Attack()
 	OwnerController->GetPlayerViewPoint(Location, Rotation);
 
 	FVector EndPoint = Location + Rotation.Vector() * MaxRange;
-	DrawDebugPoint(GetWorld(), EndPoint, 2, FColor::Red, true);
 
 	FHitResult HitResult;
 	bool bSuccess = GetWorld()->LineTraceSingleByChannel(HitResult, Location, EndPoint, ECC_GameTraceChannel1);
