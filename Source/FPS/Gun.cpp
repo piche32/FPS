@@ -22,6 +22,8 @@ void AGun::PullTrigger()
 	{
 		UNiagaraFunctionLibrary::SpawnSystemAttached(MuzzleFlash, Mesh, TEXT("b_gun_muzzleflash"), FVector(0.f), FRotator(90.0f), EAttachLocation::Type::KeepRelativeOffset, true);
 	}
+
+	Attack();
 }
 
 // Called when the game starts or when spawned
@@ -34,4 +36,31 @@ void AGun::BeginPlay()
 void AGun::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
+
+void AGun::Attack()
+{
+	APawn *OwnerPawn = Cast<APawn>(GetOwner());
+	if (OwnerPawn == nullptr)
+		return;
+	AController *OwnerController = OwnerPawn->GetController();
+	if (OwnerController == nullptr)
+		return;
+
+	FVector Location;
+	FRotator Rotation;
+	OwnerController->GetPlayerViewPoint(Location, Rotation);
+
+	FVector EndPoint = Location + Rotation.Vector() * MaxRange;
+	DrawDebugPoint(GetWorld(), EndPoint, 2, FColor::Red, true);
+
+	FHitResult HitResult;
+	bool bSuccess = GetWorld()->LineTraceSingleByChannel(HitResult, Location, EndPoint, ECC_GameTraceChannel1);
+	if (bSuccess)
+	{
+		if (HitFlash)
+		{
+			UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), HitFlash, HitResult.Location);
+		}
+	}
 }

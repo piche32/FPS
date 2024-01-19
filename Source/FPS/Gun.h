@@ -36,4 +36,12 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Firing")
 	UNiagaraSystem *MuzzleFlash;
+
+	UPROPERTY(EditAnywhere, Category = "Firing")
+	float MaxRange = 1000;
+
+	UPROPERTY(EditAnywhere, Category = "Firing")
+	UNiagaraSystem *HitFlash;
+
+	void Attack();
 };
