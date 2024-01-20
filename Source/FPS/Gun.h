@@ -43,5 +43,5 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Firing")
 	UNiagaraSystem *HitFlash;
 
-	void Attack();
+	void Shoot();
 };

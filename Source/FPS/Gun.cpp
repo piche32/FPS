@@ -23,7 +23,7 @@ void AGun::PullTrigger()
 		UNiagaraFunctionLibrary::SpawnSystemAttached(MuzzleFlash, Mesh, TEXT("b_gun_muzzleflash"), FVector(0.f), FRotator(90.0f), EAttachLocation::Type::KeepRelativeOffset, true);
 	}
 
-	Attack();
+	Shoot();
 }
 
 // Called when the game starts or when spawned
@@ -38,7 +38,7 @@ void AGun::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-void AGun::Attack()
+void AGun::Shoot()
 {
 	APawn *OwnerPawn = Cast<APawn>(GetOwner());
 	if (OwnerPawn == nullptr)
