@@ -43,5 +43,8 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Firing")
 	UNiagaraSystem *HitFlash;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float Damage = 10.f;
+
 	void Shoot();
 };

@@ -3,6 +3,7 @@
 #include "Gun.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "NiagaraFunctionLibrary.h"
+#include "Engine/DamageEvents.h"
 
 // Sets default values
 AGun::AGun()
@@ -57,9 +58,18 @@ void AGun::Shoot()
 	bool bSuccess = GetWorld()->LineTraceSingleByChannel(HitResult, Location, EndPoint, ECC_GameTraceChannel1);
 	if (bSuccess)
 	{
-		if (HitFlash)
+		if (HitFlash == nullptr)
 		{
-			UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), HitFlash, HitResult.Location);
+			return;
+		}
+		FVector ShotDirection = -Rotation.Vector();
+		UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), HitFlash, HitResult.Location, ShotDirection.Rotation());
+
+		AActor *HitActor = HitResult.GetActor();
+		if (HitActor)
+		{
+			FPointDamageEvent DamageEvent(Damage, HitResult, ShotDirection, nullptr);
+			HitActor->TakeDamage(Damage, DamageEvent, OwnerController, this);
 		}
 	}
 }
