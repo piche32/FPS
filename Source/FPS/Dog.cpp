@@ -1,12 +1,15 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Dog.h"
+#include "Components/SkeletalMeshComponent.h"
 
 // Sets default values
 ADog::ADog()
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	GetMesh()->SetSimulatePhysics(true);
 }
 
 // Called when the game starts or when spawned
@@ -15,6 +18,8 @@ void ADog::BeginPlay()
 	Super::BeginPlay();
 
 	Health = MaxHealth;
+
+	GetMesh()->OnComponentHit.AddDynamic(this, &ADog::OnHit);
 }
 
 // Called every frame
@@ -39,4 +44,9 @@ float ADog::TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEven
 	UE_LOG(LogTemp, Warning, TEXT("Dog Health is %f"), Health);
 
 	return DamageToApply;
+}
+
+void ADog::OnHit(UPrimitiveComponent *HitComp, AActor *OtherActor, UPrimitiveComponent *OhterComp, FVector NormalImpulse, const FHitResult &Hit)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Hit"));
 }

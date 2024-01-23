@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "Dog.generated.h"
 
+class USkeletalMeshComponent;
+
 UCLASS()
 class FPS_API ADog : public ACharacter
 {
@@ -29,9 +31,15 @@ public:
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser) override;
 
 private:
-	UPROPERTY(EditDefaultsOnly)
-	float MaxHealth = 100;
+	UPROPERTY(EditDefaultsOnly, Category = "Info")
+	float MaxHealth = 100.f;
 
-	UPROPERTY(VIsibleAnywhere)
+	UPROPERTY(VisibleAnywhere, Category = "Info")
 	float Health;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Info")
+	float Demage = 10.f;
+
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent *HitComp, AActor *OtherActor, UPrimitiveComponent *OhterComp, FVector NormalImpulse, const FHitResult &Hit);
 };
