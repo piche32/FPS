@@ -28,17 +28,9 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent) override;
 
-	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser) override;
-
 private:
-	UPROPERTY(EditDefaultsOnly, Category = "Info")
-	float MaxHealth = 100.f;
-
-	UPROPERTY(VisibleAnywhere, Category = "Info")
-	float Health;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Info")
-	float Demage = 10.f;
+	UPROPERTY(EditDefaultsOnly, Category = "Combat")
+	float Damage = 10.f;
 
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent *HitComp, AActor *OtherActor, UPrimitiveComponent *OhterComp, FVector NormalImpulse, const FHitResult &Hit);

@@ -3,7 +3,8 @@
 #include "Gun.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "NiagaraFunctionLibrary.h"
-#include "Engine/DamageEvents.h"
+#include "GameFramework/DamageType.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AGun::AGun()
@@ -68,8 +69,8 @@ void AGun::Shoot()
 		AActor *HitActor = HitResult.GetActor();
 		if (HitActor)
 		{
-			FPointDamageEvent DamageEvent(Damage, HitResult, ShotDirection, nullptr);
-			HitActor->TakeDamage(Damage, DamageEvent, OwnerController, this);
+			auto DamageTypeClass = UDamageType::StaticClass();
+			UGameplayStatics::ApplyDamage(HitActor, Damage, OwnerController, this, DamageTypeClass);
 		}
 	}
 }

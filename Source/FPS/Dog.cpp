@@ -2,6 +2,8 @@
 
 #include "Dog.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "GameFramework/DamageType.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ADog::ADog()
@@ -16,8 +18,6 @@ ADog::ADog()
 void ADog::BeginPlay()
 {
 	Super::BeginPlay();
-
-	Health = MaxHealth;
 
 	GetMesh()->OnComponentHit.AddDynamic(this, &ADog::OnHit);
 }
@@ -34,19 +34,14 @@ void ADog::SetupPlayerInputComponent(UInputComponent *PlayerInputComponent)
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
-float ADog::TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser)
-{
-	float DamageToApply = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
-
-	DamageToApply = FMath::Min(Health, DamageToApply);
-	Health -= DamageToApply;
-
-	UE_LOG(LogTemp, Warning, TEXT("Dog Health is %f"), Health);
-
-	return DamageToApply;
-}
-
 void ADog::OnHit(UPrimitiveComponent *HitComp, AActor *OtherActor, UPrimitiveComponent *OhterComp, FVector NormalImpulse, const FHitResult &Hit)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Hit"));
+
+	auto DamageTypeClass = UDamageType::StaticClass();
+
+	if (OtherActor && OtherActor != this)
+	{
+		UGameplayStatics::ApplyDamage(OtherActor, Damage, GetController(), this, DamageTypeClass);
+	}
 }
