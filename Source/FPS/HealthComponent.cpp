@@ -37,3 +37,8 @@ void UHealthComponent::DamageTaken(AActor *DamagedActor, float Damage, const UDa
 
 	UE_LOG(LogTemp, Warning, TEXT("%s Take Damaged. Health: %f"), *DamagedActor->GetName(), Health);
 }
+
+bool UHealthComponent::IsDead() const
+{
+	return Health <= 0;
+}
