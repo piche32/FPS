@@ -6,6 +6,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
 #include "Components/InputComponent.h"
+#include "HealthComponent.h"
 #include "Gun.h"
 
 // Sets default values
@@ -13,6 +14,8 @@ AShooter::AShooter()
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("Health Component"));
 }
 
 // Called when the game starts or when spawned
@@ -33,6 +36,11 @@ void AShooter::BeginPlay()
 	Gun = GetWorld()->SpawnActor<AGun>(GunClass);
 	Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("WeaponSocket"));
 	Gun->SetOwner(this);
+
+	if (HealthComponent)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Shooter Health"));
+	}
 }
 
 // Called every frame
@@ -91,4 +99,16 @@ void AShooter::Shoot(const FInputActionValue &InputActionValue)
 	{
 		Gun->PullTrigger();
 	}
+}
+
+float AShooter::TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, AController *EventInstigator, AActor *DamageCauser)
+{
+	Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+
+	if (HealthComponent)
+	{
+		HealthComponent->DamageTaken(DamageAmount);
+	}
+
+	return DamageAmount;
 }

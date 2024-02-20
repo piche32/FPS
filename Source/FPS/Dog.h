@@ -7,6 +7,7 @@
 #include "Dog.generated.h"
 
 class USkeletalMeshComponent;
+class UHealthComponent;
 
 UCLASS()
 class FPS_API ADog : public ACharacter
@@ -21,6 +22,9 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UFUNCTION(BlueprintCallable)
+	void SetOffIsHit();
+
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -28,7 +32,15 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent) override;
 
+	UPROPERTY(BlueprintReadOnly)
+	bool IsHit;
+
 private:
+	UPROPERTY(VisibleAnywhere)
+	UHealthComponent *HealthComponent;
+
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, AController *EventInstigator, AActor *DamageCauser) override;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
 	float Damage = 10.f;
 

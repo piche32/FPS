@@ -15,6 +15,11 @@ public:
 	// Sets default values for this component's properties
 	UHealthComponent();
 
+	void DamageTaken(float Damage);
+
+	UFUNCTION(BlueprintPure)
+	bool IsDead() const;
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -26,11 +31,6 @@ public:
 private:
 	UPROPERTY(EditDefaultsOnly)
 	float MaxHealth = 100.f;
+	UPROPERTY(VisibleAnywhere)
 	float Health = 1.f;
-
-	UFUNCTION()
-	void DamageTaken(AActor *DamagedActor, float Damage, const UDamageType *DamageType, class AController *Instigator, AActor *DamageCauser);
-
-	UFUNCTION(BlueprintPure)
-	bool IsDead() const;
 };

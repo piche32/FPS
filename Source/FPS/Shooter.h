@@ -9,6 +9,7 @@
 class UInputMappingContext;
 class UInputAction;
 class AGun;
+class UHealthComponent;
 struct FInputActionValue;
 
 UCLASS()
@@ -33,6 +34,9 @@ public:
 
 private:
 	APlayerController *PlayerController;
+
+	UPROPERTY(VisibleAnywhere)
+	UHealthComponent *HealthComponent;
 
 	UPROPERTY(EditAnywhere, Category = Input)
 	UInputMappingContext *DefaultMappingContext;
@@ -61,4 +65,6 @@ private:
 
 	UPROPERTY()
 	AGun *Gun;
+
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, AController *EventInstigator, AActor *DamageCauser) override;
 };
