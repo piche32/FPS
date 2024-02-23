@@ -1,10 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Dog.h"
-#include "Components/SkeletalMeshComponent.h"
+// #include "Components/SkeletalMeshComponent.h"
 #include "GameFramework/DamageType.h"
 #include "Kismet/GameplayStatics.h"
 #include "HealthComponent.h"
+#include "Components/SphereComponent.h"
 
 // Sets default values
 ADog::ADog()
@@ -12,7 +13,7 @@ ADog::ADog()
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	GetMesh()->SetSimulatePhysics(true);
+	// GetMesh()->SetSimulatePhysics(true);
 
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("Health Component"));
 }
@@ -22,11 +23,19 @@ void ADog::BeginPlay()
 {
 	Super::BeginPlay();
 
-	GetMesh()->OnComponentHit.AddDynamic(this, &ADog::OnHit);
+	TArray<USphereComponent *> Comps;
+	GetComponents(Comps);
 
-	if (HealthComponent)
+	for (USphereComponent *Comp : Comps)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Dog Health"));
+		MouseCollision = Comp;
+		break;
+	}
+
+	if (MouseCollision)
+	{
+		MouseCollision->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("RigTongue1"));
+		MouseCollision->OnComponentBeginOverlap.AddDynamic(this, &ADog::OnAttack);
 	}
 }
 
@@ -64,10 +73,8 @@ float ADog::TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEven
 	return DamageAmount;
 }
 
-void ADog::OnHit(UPrimitiveComponent *HitComp, AActor *OtherActor, UPrimitiveComponent *OhterComp, FVector NormalImpulse, const FHitResult &Hit)
+void ADog::OnAttack(UPrimitiveComponent *OverlappedComp, AActor *OtherActor, UPrimitiveComponent *OhterComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Hit"));
-
 	auto DamageTypeClass = UDamageType::StaticClass();
 
 	if (OtherActor && OtherActor != this)
