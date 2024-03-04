@@ -11,6 +11,22 @@ class FPS_API ADogAIController : public AAIController
 {
 	GENERATED_BODY()
 
-private:
+protected:
 	virtual void BeginPlay() override;
+
+	virtual void OnPossess(APawn *InPawn) override;
+
+private:
+	UPROPERTY(EditAnywhere)
+	class UBehaviorTree *AIBehavior;
+
+	UFUNCTION()
+	void SetHasLineOfSightAndEnemyActor(AActor *Actor, FAIStimulus Stimulus);
+
+	FTimerHandle SetHasLineOfSightTimer;
+
+	UPROPERTY(EditDefaultsOnly)
+	float SetHasLineOfSightTime = 4.0f;
+
+	void ClearHasLineOfSightAndEnemyActor();
 };
