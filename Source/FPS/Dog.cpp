@@ -6,6 +6,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "HealthComponent.h"
 #include "Components/SphereComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 // Sets default values
 ADog::ADog()
@@ -81,6 +82,21 @@ void ADog::OnAttack(UPrimitiveComponent *OverlappedComp, AActor *OtherActor, UPr
 	{
 		UGameplayStatics::ApplyDamage(OtherActor, Damage, GetController(), this, DamageTypeClass);
 	}
+}
+
+void ADog::StartAttacked()
+{
+	HasAttacked = true;
+}
+
+void ADog::UpdateWalkSpeed(float Speed)
+{
+	GetCharacterMovement()->MaxWalkSpeed = Speed;
+}
+
+void ADog::FinishAttacked()
+{
+	HasAttacked = false;
 }
 
 void ADog::SetOffIsHit()

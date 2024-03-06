@@ -22,8 +22,17 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UPROPERTY(BlueprintReadOnly, Category = "Combat")
+	bool IsHit;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Combat")
+	bool HasAttacked = false;
+
 	UFUNCTION(BlueprintCallable)
 	void SetOffIsHit();
+
+	UFUNCTION(BlueprintCallable)
+	void FinishAttacked();
 
 public:
 	// Called every frame
@@ -32,8 +41,9 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent) override;
 
-	UPROPERTY(BlueprintReadOnly)
-	bool IsHit;
+	void StartAttacked();
+
+	void UpdateWalkSpeed(float Speed);
 
 private:
 	UPROPERTY(VisibleAnywhere)
@@ -46,6 +56,12 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
 	float Damage = 10.f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Movement")
+	float ChaseSpeed = 500.f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Movement")
+	float PatrolSpeed = 120.f;
 
 	UFUNCTION()
 	void OnAttack(UPrimitiveComponent *OverlappedComp, AActor *OtherActor, UPrimitiveComponent *OhterComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
