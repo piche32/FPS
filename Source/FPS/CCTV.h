@@ -3,13 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
+#include "GameFramework/Pawn.h"
 #include "CCTV.generated.h"
 
 class USphereComponent;
+class UHealthComponent;
+class USceneComponent;
 
 UCLASS()
-class FPS_API ACCTV : public AActor
+class FPS_API ACCTV : public APawn
 {
 	GENERATED_BODY()
 
@@ -21,16 +23,28 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	UStaticMeshComponent *TopMesh;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	USceneComponent *ViewPoint;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UHealthComponent *HealthComponent;
+
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION(BlueprintCallable)
+	void RotateCamera(FVector LookAtTarget);
+
+	UFUNCTION(BlueprintCallable)
+	void Search();
+
 private:
 	UPROPERTY(VisibleAnywhere)
 	USphereComponent *Collision;
-
-	UPROPERTY(VisibleAnywhere)
-	UStaticMeshComponent *TopMesh;
 
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent *BottomMesh;
@@ -40,4 +54,6 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float Damage = 3.f;
+
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, AController *EventInstigator, AActor *DamageCauser) override;
 };
