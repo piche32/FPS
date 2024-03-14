@@ -19,10 +19,10 @@ ACCTV::ACCTV()
 	BottomMesh->SetupAttachment(Collision);
 
 	TopMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("TopMesh"));
-	TopMesh->SetupAttachment(BottomMesh);
+	TopMesh->SetupAttachment(BottomMesh, TEXT("CameraConnectPoint"));
 
 	ViewPoint = CreateDefaultSubobject<USceneComponent>(TEXT("ViewPoint"));
-	ViewPoint->SetupAttachment(TopMesh);
+	ViewPoint->SetupAttachment(TopMesh, TEXT("ViewPoint"));
 
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("Health componentComponent"));
 }
