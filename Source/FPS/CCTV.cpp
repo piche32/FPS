@@ -6,6 +6,8 @@
 #include "HealthComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Math/Color.h"
+#include "NiagaraComponent.h"
+
 // Sets default values
 ACCTV::ACCTV()
 {
@@ -21,8 +23,14 @@ ACCTV::ACCTV()
 	TopMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("TopMesh"));
 	TopMesh->SetupAttachment(BottomMesh, TEXT("CameraConnectPoint"));
 
+	Smoke = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Smoke"));
+	Smoke->SetupAttachment(TopMesh);
+
 	ViewPoint = CreateDefaultSubobject<USceneComponent>(TEXT("ViewPoint"));
 	ViewPoint->SetupAttachment(TopMesh, TEXT("ViewPoint"));
+
+	LaserBeam = CreateDefaultSubobject<UNiagaraComponent>(TEXT("LaserBeam"));
+	LaserBeam->SetupAttachment(ViewPoint);
 
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("Health componentComponent"));
 }
@@ -31,6 +39,11 @@ ACCTV::ACCTV()
 void ACCTV::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if (Smoke)
+	{
+		Smoke->Deactivate();
+	}
 }
 
 // Called every frame
@@ -73,8 +86,37 @@ float ACCTV::TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEve
 
 	if (HealthComponent->IsDead())
 	{
-		// DetachFromControllerPendingDestroy();
+		OnBreak();
 	}
 
 	return DamageAmount;
+}
+
+void ACCTV::OnBreak()
+{
+	GetWorldTimerManager().SetTimer(BrokenMotionTimer, this, &ACCTV::UpdateBrokenMotion, GetWorld()->GetDeltaSeconds(), true);
+	if (Smoke)
+	{
+		Smoke->Activate();
+	}
+	if (LaserBeam)
+	{
+		LaserBeam->Deactivate();
+	}
+
+	DetachFromControllerPendingDestroy();
+}
+
+void ACCTV::UpdateBrokenMotion()
+{
+	FRotator Original = TopMesh->GetRelativeRotation();
+	FRotator Target(Original.Pitch, Original.Yaw, BrokenAngle);
+
+	TopMesh->SetRelativeRotation(FMath::RInterpTo(Original, Target, GetWorld()->GetDeltaSeconds(), 1.f));
+
+	float Result = TopMesh->GetRelativeRotation().Roll;
+	if (BrokenAngle - 3.f <= Result && Result <= BrokenAngle + 3.f)
+	{
+		GetWorldTimerManager().ClearTimer(BrokenMotionTimer);
+	}
 }

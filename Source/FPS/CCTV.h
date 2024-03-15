@@ -9,6 +9,7 @@
 class USphereComponent;
 class UHealthComponent;
 class USceneComponent;
+class UNiagaraComponent;
 
 UCLASS()
 class FPS_API ACCTV : public APawn
@@ -49,11 +50,29 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent *BottomMesh;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	UPROPERTY(EditDefaultsOnly, Category = "Attacking")
 	float MaxRange = 1000;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	UPROPERTY(EditDefaultsOnly, Category = "Attacking")
 	float Damage = 3.f;
 
-	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, AController *EventInstigator, AActor *DamageCauser) override;
+	UPROPERTY(VisibleAnywhere, Category = "Attacking")
+	UNiagaraComponent *LaserBeam;
+
+	virtual float TakeDamage(
+		float DamageAmount,
+		struct FDamageEvent const &DamageEvent,
+		AController *EventInstigator,
+		AActor *DamageCauser) override;
+
+	UPROPERTY(VisibleAnywhere, Category = "Breaking")
+	UNiagaraComponent *Smoke;
+
+	FTimerHandle BrokenMotionTimer;
+	UPROPERTY(EditDefaultsOnly, Category = "Breaking")
+	float BrokenAngle = -90.f;
+
+	void OnBreak();
+
+	void UpdateBrokenMotion();
 };
