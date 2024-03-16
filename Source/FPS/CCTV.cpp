@@ -7,6 +7,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Math/Color.h"
 #include "NiagaraComponent.h"
+#include "Kismet/KismetMathLibrary.h"
 
 // Sets default values
 ACCTV::ACCTV()
@@ -59,6 +60,13 @@ void ACCTV::BeginPlay()
 void ACCTV::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
+
+void ACCTV::RotateToTarget(FVector LookAtTarget)
+{
+	FRotator LookAtRotation = UKismetMathLibrary::FindLookAtRotation(TopMesh->GetComponentLocation(), LookAtTarget);
+	LookAtRotation = FRotator(LookAtRotation.Roll, LookAtRotation.Yaw + 90.f, LookAtRotation.Pitch); // pitch, yaw, roll
+	TopMesh->SetWorldRotation(LookAtRotation);
 }
 
 // void ACCTV::RotateCamera(FVector LookAtTarget)

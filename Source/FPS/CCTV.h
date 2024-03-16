@@ -45,6 +45,8 @@ public:
 	// UFUNCTION(BlueprintCallable)
 	// void RotateCamera(FVector LookAtTarget);
 
+	void RotateToTarget(FVector LookAtTarget);
+
 	void Rotate(float DeltaTime);
 
 private:
