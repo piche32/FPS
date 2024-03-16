@@ -50,14 +50,14 @@ void ACCTVAIController::CheckPlayerLocation()
             Start,
             End,
             FQuat::Identity,
-            ECC_GameTraceChannel2, // CCTV Trace Channel
+            ECC_GameTraceChannel1, // CCTV Trace Channel
             FCollisionShape::MakeSphere(TraceSphereRadius),
             CollisionParams);
 
         if (bHit)
         {
-            //     DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, TraceSphereRadius, 12, FColor::Green, false, 5.f);
-            //     DrawDebugLine(GetWorld(), Start, End, FColor::Red, false, 5.f);
+            // DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, TraceSphereRadius, 12, FColor::Green, false, 5.f);
+            // DrawDebugLine(GetWorld(), Start, End, FColor::Red, false, 5.f);
 
             CCTV->UpdateLaserEnd(HitResult.Location);
             if (APawn *HitPawn = Cast<APawn>(HitResult.GetActor()))
