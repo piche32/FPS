@@ -80,7 +80,12 @@ void ADog::OnAttack(UPrimitiveComponent *OverlappedComp, AActor *OtherActor, UPr
 
 	if (OtherActor && Cast<APawn>(OtherActor)->IsPlayerControlled())
 	{
-		UGameplayStatics::ApplyDamage(OtherActor, Damage, GetController(), this, DamageTypeClass);
+		UGameplayStatics::ApplyDamage(
+			OtherActor,
+			Damage,
+			GetController(),
+			this,
+			DamageTypeClass);
 	}
 }
 

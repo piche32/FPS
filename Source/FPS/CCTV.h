@@ -42,12 +42,9 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// UFUNCTION(BlueprintCallable)
-	// void RotateCamera(FVector LookAtTarget);
-
 	void RotateToTarget(FVector LookAtTarget);
-
 	void Rotate(float DeltaTime);
+	void Attack(AActor *DamagedActor);
 
 private:
 	UPROPERTY(VisibleAnywhere)
@@ -75,6 +72,7 @@ private:
 	UNiagaraComponent *Smoke;
 
 	FTimerHandle BrokenMotionTimer;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Breaking")
 	float BrokenAngle = -90.f;
 
@@ -93,5 +91,4 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Rotating")
 	float RotatingInterPSpeed = 1.f;
-
 };

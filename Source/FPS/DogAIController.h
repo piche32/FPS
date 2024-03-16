@@ -17,7 +17,7 @@ protected:
 	virtual void OnPossess(APawn *InPawn) override;
 
 private:
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	class UBehaviorTree *AIBehavior;
 
 	UFUNCTION()

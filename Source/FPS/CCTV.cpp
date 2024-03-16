@@ -69,25 +69,6 @@ void ACCTV::RotateToTarget(FVector LookAtTarget)
 	TopMesh->SetWorldRotation(LookAtRotation);
 }
 
-// void ACCTV::RotateCamera(FVector LookAtTarget)
-// {
-// 	// FVector ToTarget = LookAtTarget - TopMesh->GetComponentLocation();
-// 	// FRotator LookAtRotation = FRotator(0.f, ToTarget.Rotation().Yaw + 90.f, 0.f);
-
-// 	// TopMesh->SetWorldRotation(LookAtRotation);
-
-// 	FVector ToTarget = LookAtTarget - TopMesh->GetComponentLocation();
-// 	FRotator OriginalRotation = TopMesh->GetComponentRotation();
-
-// 	// Z - Z'
-
-// 	FRotator LookAtRotation = FRotator(OriginalRotation.Pitch, ToTarget.Rotation().Yaw + 90.f, ToTarget.Rotation().Roll - 20.f);
-
-// 	UE_LOG(LogTemp, Warning, TEXT("TopMesh: %s, LookAtTarget: %s, ToTarget: %s"), *TopMesh->GetComponentLocation().ToString(), *LookAtTarget.ToString(), *ToTarget.ToString());
-
-// 	TopMesh->SetWorldRotation(LookAtRotation);
-// }
-
 void ACCTV::Rotate(float DeltaTime)
 {
 	FRotator Original = TopMesh->GetRelativeRotation();
@@ -105,6 +86,12 @@ void ACCTV::Rotate(float DeltaTime)
 	}
 }
 
+void ACCTV::Attack(AActor *DamagedActor)
+{
+	auto DamageTypeClass = UDamageType::StaticClass();
+	UGameplayStatics::ApplyDamage(DamagedActor, Damage, GetController(), this, DamageTypeClass);
+}
+
 float ACCTV::TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, AController *EventInstigator, AActor *DamageCauser)
 {
 	Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
@@ -113,7 +100,7 @@ float ACCTV::TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEve
 	{
 		HealthComponent->DamageTaken(DamageAmount);
 	}
-
+ 
 	if (HealthComponent->IsDead())
 	{
 		OnBreak();
