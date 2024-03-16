@@ -40,8 +40,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void RotateCamera(FVector LookAtTarget);
 
-	UFUNCTION(BlueprintCallable)
-	void Search();
+	void Rotate(float DeltaTime);
 
 private:
 	UPROPERTY(VisibleAnywhere)
@@ -75,4 +74,16 @@ private:
 	void OnBreak();
 
 	void UpdateBrokenMotion();
+
+	UPROPERTY(EditAnywhere, Category = "Rotating")
+	float DefaultPitchAngle = -20.f;
+
+	UPROPERTY(EditAnywhere, Category = "Rotating")
+	float RotatingVelocity = 50.f;
+
+	UPROPERTY(EditAnywhere, Category = "Rotating")
+	float MaxAngle = 45.f;
+
+	UPROPERTY(EditAnywhere, Category = "Rotating")
+	float RotatingInterPSpeed = 1.f;
 };

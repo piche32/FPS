@@ -71,8 +71,21 @@ void ACCTV::RotateCamera(FVector LookAtTarget)
 	TopMesh->SetWorldRotation(LookAtRotation);
 }
 
-void ACCTV::Search()
+void ACCTV::Rotate(float DeltaTime)
 {
+	FRotator Original = TopMesh->GetRelativeRotation();
+	float TargetYaw = Original.Yaw + RotatingVelocity * DeltaTime;
+	FRotator Target(Original.Pitch, TargetYaw, DefaultPitchAngle); // Pitch, Yaw, Roll
+
+	TopMesh->SetRelativeRotation(FMath::RInterpTo(Original, Target, DeltaTime, RotatingInterPSpeed));
+
+	if (-MaxAngle <= TargetYaw && TargetYaw <= MaxAngle)
+		return;
+
+	if ((TargetYaw > 0 && RotatingVelocity > 0) || (TargetYaw < 0 && RotatingVelocity < 0))
+	{
+		RotatingVelocity *= -1.f;
+	}
 }
 
 float ACCTV::TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, AController *EventInstigator, AActor *DamageCauser)

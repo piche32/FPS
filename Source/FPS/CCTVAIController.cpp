@@ -39,7 +39,6 @@ void ACCTVAIController::SetHasLineOfSight(AActor *Actor, FAIStimulus Stimulus)
     }
     else
     {
-        Blackboard->SetValueAsBool(TEXT("HasLineOfSight"), false);
-        Blackboard->SetValueAsBool(TEXT("CanAttack"), false);
+        //Blackboard->SetValueAsBool(TEXT("CanAttack"), false);
     }
 }
