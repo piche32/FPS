@@ -59,7 +59,7 @@ void ACCTVAIController::CheckPlayerLocation()
             //     DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, TraceSphereRadius, 12, FColor::Green, false, 5.f);
             //     DrawDebugLine(GetWorld(), Start, End, FColor::Red, false, 5.f);
 
-            CCTV->UpdateLaserEnd(HitResult.ImpactPoint);
+            CCTV->UpdateLaserEnd(HitResult.Location);
             if (APawn *HitPawn = Cast<APawn>(HitResult.GetActor()))
             {
                 if (HitPawn->IsPlayerControlled())
@@ -67,6 +67,7 @@ void ACCTVAIController::CheckPlayerLocation()
                     CanSearchPlayer = true;
                     Blackboard->SetValueAsBool(TEXT("CanAttack"), true);
                     Blackboard->SetValueAsVector(TEXT("PlayerLocation"), HitPawn->GetActorLocation());
+                    CCTV->UpdateLaserEnd(HitResult.ImpactPoint);
 
                     if (SearchPlayerTimer.IsValid())
                     {
