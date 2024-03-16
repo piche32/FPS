@@ -32,10 +32,10 @@ private:
 	float TraceSphereRadius = 20.f;
 
 	UPROPERTY(EditAnywhere, Category = "Checking Player Location")
-	float SearchPlayerTime = 4.f;
+	float SearchPlayerTime = 1.f;
 
 	FTimerHandle SearchPlayerTimer;
-	
+
 	void CheckPlayerLocation();
 	void UpdateLaserEnd();
 	void SetSearchPlayerTimer();
