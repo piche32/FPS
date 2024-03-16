@@ -35,6 +35,15 @@ ACCTV::ACCTV()
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("Health componentComponent"));
 }
 
+FVector ACCTV::GetViewPointLocation() const
+{
+	return ViewPoint->GetComponentLocation();
+}
+
+FVector ACCTV::GetViewPointForward() const
+{
+	return ViewPoint->GetForwardVector();
+}
 // Called when the game starts or when spawned
 void ACCTV::BeginPlay()
 {
@@ -52,24 +61,24 @@ void ACCTV::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-void ACCTV::RotateCamera(FVector LookAtTarget)
-{
-	// FVector ToTarget = LookAtTarget - TopMesh->GetComponentLocation();
-	// FRotator LookAtRotation = FRotator(0.f, ToTarget.Rotation().Yaw + 90.f, 0.f);
+// void ACCTV::RotateCamera(FVector LookAtTarget)
+// {
+// 	// FVector ToTarget = LookAtTarget - TopMesh->GetComponentLocation();
+// 	// FRotator LookAtRotation = FRotator(0.f, ToTarget.Rotation().Yaw + 90.f, 0.f);
 
-	// TopMesh->SetWorldRotation(LookAtRotation);
+// 	// TopMesh->SetWorldRotation(LookAtRotation);
 
-	FVector ToTarget = LookAtTarget - TopMesh->GetComponentLocation();
-	FRotator OriginalRotation = TopMesh->GetComponentRotation();
+// 	FVector ToTarget = LookAtTarget - TopMesh->GetComponentLocation();
+// 	FRotator OriginalRotation = TopMesh->GetComponentRotation();
 
-	// Z - Z'
+// 	// Z - Z'
 
-	FRotator LookAtRotation = FRotator(OriginalRotation.Pitch, ToTarget.Rotation().Yaw + 90.f, ToTarget.Rotation().Roll - 20.f);
+// 	FRotator LookAtRotation = FRotator(OriginalRotation.Pitch, ToTarget.Rotation().Yaw + 90.f, ToTarget.Rotation().Roll - 20.f);
 
-	UE_LOG(LogTemp, Warning, TEXT("TopMesh: %s, LookAtTarget: %s, ToTarget: %s"), *TopMesh->GetComponentLocation().ToString(), *LookAtTarget.ToString(), *ToTarget.ToString());
+// 	UE_LOG(LogTemp, Warning, TEXT("TopMesh: %s, LookAtTarget: %s, ToTarget: %s"), *TopMesh->GetComponentLocation().ToString(), *LookAtTarget.ToString(), *ToTarget.ToString());
 
-	TopMesh->SetWorldRotation(LookAtRotation);
-}
+// 	TopMesh->SetWorldRotation(LookAtRotation);
+// }
 
 void ACCTV::Rotate(float DeltaTime)
 {
@@ -107,7 +116,12 @@ float ACCTV::TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEve
 
 void ACCTV::OnBreak()
 {
-	GetWorldTimerManager().SetTimer(BrokenMotionTimer, this, &ACCTV::UpdateBrokenMotion, GetWorld()->GetDeltaSeconds(), true);
+	GetWorldTimerManager().SetTimer(
+		BrokenMotionTimer,
+		this,
+		&ACCTV::UpdateBrokenMotion,
+		GetWorld()->GetDeltaSeconds(),
+		true);
 	if (Smoke)
 	{
 		Smoke->Activate();
@@ -131,5 +145,13 @@ void ACCTV::UpdateBrokenMotion()
 	if (BrokenAngle - 3.f <= Result && Result <= BrokenAngle + 3.f)
 	{
 		GetWorldTimerManager().ClearTimer(BrokenMotionTimer);
+	}
+}
+
+void ACCTV::UpdateLaserEnd(FVector Target)
+{
+	if (LaserBeam)
+	{
+		LaserBeam->SetVectorParameter(TEXT("Beam End"), Target);
 	}
 }

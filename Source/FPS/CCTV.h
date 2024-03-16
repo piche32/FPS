@@ -20,6 +20,11 @@ public:
 	// Sets default values for this actor's properties
 	ACCTV();
 
+	FVector GetViewPointLocation() const;
+	FVector GetViewPointForward() const;
+
+	void UpdateLaserEnd(FVector Target);
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -37,8 +42,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	UFUNCTION(BlueprintCallable)
-	void RotateCamera(FVector LookAtTarget);
+	// UFUNCTION(BlueprintCallable)
+	// void RotateCamera(FVector LookAtTarget);
 
 	void Rotate(float DeltaTime);
 
@@ -86,4 +91,5 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Rotating")
 	float RotatingInterPSpeed = 1.f;
+
 };

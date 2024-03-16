@@ -11,6 +11,9 @@ class FPS_API ACCTVAIController : public AAIController
 {
 	GENERATED_BODY()
 
+public:
+	virtual void Tick(float DeltaTime) override;
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -20,6 +23,22 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 	class UBehaviorTree *AIBehavior;
 
-	UFUNCTION()
-	void SetHasLineOfSight(AActor *Actor, FAIStimulus Stimulus);
+	class ACCTV *CCTV;
+
+	UPROPERTY(EditAnywhere, Category = "Checking Player Location")
+	float SightRadius = 700.f;
+
+	UPROPERTY(EditAnywhere, Category = "Checking Player Location")
+	float TraceSphereRadius = 20.f;
+
+	UPROPERTY(EditAnywhere, Category = "Checking Player Location")
+	float SearchPlayerTime = 4.f;
+
+	FTimerHandle SearchPlayerTimer;
+	
+	void CheckPlayerLocation();
+	void UpdateLaserEnd();
+	void SetSearchPlayerTimer();
+	void ClearPlayerLocationAndCanAttack();
+
 };
