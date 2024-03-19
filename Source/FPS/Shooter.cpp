@@ -95,10 +95,7 @@ void AShooter::Look(const FInputActionValue &InputActionValue)
 
 void AShooter::Shoot(const FInputActionValue &InputActionValue)
 {
-	if (Gun)
-	{
-		Gun->PullTrigger();
-	}
+	OnShoot();
 }
 
 float AShooter::TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, AController *EventInstigator, AActor *DamageCauser)
@@ -111,4 +108,12 @@ float AShooter::TakeDamage(float DamageAmount, struct FDamageEvent const &Damage
 	}
 
 	return DamageAmount;
+}
+
+void AShooter::OnShoot()
+{ 
+	if (Gun)
+	{
+		Gun->PullTrigger();
+	}
 }

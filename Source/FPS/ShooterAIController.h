@@ -6,9 +6,6 @@
 #include "AIController.h"
 #include "ShooterAIController.generated.h"
 
-/**
- *
- */
 UCLASS()
 class FPS_API AShooterAIController : public AAIController
 {
@@ -16,4 +13,20 @@ class FPS_API AShooterAIController : public AAIController
 
 protected:
 	virtual void BeginPlay() override;
+
+	virtual void OnPossess(APawn *InPawn) override;
+
+private:
+	UPROPERTY(EditDefaultsOnly)
+	class UBehaviorTree *AIBehavior;
+
+	UFUNCTION()
+	void SetHasLineOfSight(AActor *Actor, FAIStimulus Stimulus);
+
+	FTimerHandle SetHasLineOfSightTimer;
+
+	UPROPERTY(EditDefaultsOnly)
+	float SetHasLineOfSightTime = 4.f;
+
+	void ClearHasLineOfSight();
 };
