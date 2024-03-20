@@ -78,14 +78,20 @@ void ADog::OnAttack(UPrimitiveComponent *OverlappedComp, AActor *OtherActor, UPr
 {
 	auto DamageTypeClass = UDamageType::StaticClass();
 
-	if (OtherActor && Cast<APawn>(OtherActor)->IsPlayerControlled())
+	if (OtherActor)
 	{
-		UGameplayStatics::ApplyDamage(
-			OtherActor,
-			Damage,
-			GetController(),
-			this,
-			DamageTypeClass);
+		if (APawn *OtherPawn = Cast<APawn>(OtherActor))
+		{
+			if (OtherPawn->IsPlayerControlled())
+			{
+				UGameplayStatics::ApplyDamage(
+					OtherActor,
+					Damage,
+					GetController(),
+					this,
+					DamageTypeClass);
+			}
+		}
 	}
 }
 
