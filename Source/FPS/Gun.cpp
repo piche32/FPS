@@ -56,7 +56,10 @@ void AGun::Shoot()
 	FVector EndPoint = Location + Rotation.Vector() * MaxRange;
 
 	FHitResult HitResult;
-	bool bSuccess = GetWorld()->LineTraceSingleByChannel(HitResult, Location, EndPoint, ECC_GameTraceChannel2);
+	FCollisionQueryParams Params;
+	Params.AddIgnoredActor(this);
+	Params.AddIgnoredActor(OwnerPawn);
+	bool bSuccess = GetWorld()->LineTraceSingleByChannel(HitResult, Location, EndPoint, ECC_GameTraceChannel2, Params);
 	if (bSuccess)
 	{
 		if (HitFlash == nullptr)
