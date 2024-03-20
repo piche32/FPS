@@ -15,8 +15,7 @@ EBTNodeResult::Type UBTTask_FindRandomPatrol::ExecuteTask(UBehaviorTreeComponent
 {
     Super::ExecuteTask(OwnerComp, NodeMemory);
 
-    AAIController *AIController = OwnerComp.GetAIOwner();
-    APawn *Pawn = AIController->GetPawn();
+    APawn *Pawn = OwnerComp.GetAIOwner()->GetPawn();
 
     if (Pawn == nullptr)
     {
@@ -32,10 +31,10 @@ EBTNodeResult::Type UBTTask_FindRandomPatrol::ExecuteTask(UBehaviorTreeComponent
     FNavLocation PatrolLocation;
     if (!NavSystem->GetRandomReachablePointInRadius(Pawn->GetActorLocation(), PatrolRadius, PatrolLocation))
     {
-        AIController->GetBlackboardComponent()->SetValueAsVector(GetSelectedBlackboardKey(), Pawn->GetActorLocation());
+        OwnerComp.GetBlackboardComponent()->SetValueAsVector(GetSelectedBlackboardKey(), Pawn->GetActorLocation());
         return EBTNodeResult::Failed;
     }
 
-    AIController->GetBlackboardComponent()->SetValueAsVector(GetSelectedBlackboardKey(), PatrolLocation.Location);
+    OwnerComp.GetBlackboardComponent()->SetValueAsVector(GetSelectedBlackboardKey(), PatrolLocation.Location);
     return EBTNodeResult::Succeeded;
 }

@@ -13,8 +13,7 @@ EBTNodeResult::Type UBTTask_UpdateWalkSpeed::ExecuteTask(UBehaviorTreeComponent 
 {
     Super::ExecuteTask(OwnerComp, NodeMemory);
 
-    AAIController *AIController = OwnerComp.GetAIOwner();
-    ADog *Dog = Cast<ADog>(AIController->GetPawn());
+    ADog *Dog = Cast<ADog>(OwnerComp.GetAIOwner()->GetPawn());
 
     if (Dog == nullptr)
     {

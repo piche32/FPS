@@ -9,10 +9,9 @@ EBTNodeResult::Type UBTTask_RotateTopMeshToTarget::ExecuteTask(UBehaviorTreeComp
 {
     Super::ExecuteTask(OwnerComp, NodeMemory);
 
-    AAIController *AIController = OwnerComp.GetAIOwner();
-    if (ACCTV *CCTV = Cast<ACCTV>(AIController->GetPawn()))
+    if (ACCTV *CCTV = Cast<ACCTV>(OwnerComp.GetAIOwner()->GetPawn()))
     {
-        CCTV->RotateToTarget(AIController->GetBlackboardComponent()->GetValueAsVector(TEXT("PlayerLocation")));
+        CCTV->RotateToTarget(OwnerComp.GetBlackboardComponent()->GetValueAsVector(TEXT("PlayerLocation")));
     }
     else
     {
