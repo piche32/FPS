@@ -25,6 +25,9 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	AGun *Gun;
+
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -65,9 +68,6 @@ private:
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<AGun> GunClass;
-
-	UPROPERTY()
-	AGun *Gun;
 
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, AController *EventInstigator, AActor *DamageCauser) override;
 };
