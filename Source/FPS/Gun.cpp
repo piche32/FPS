@@ -66,6 +66,7 @@ void AGun::Shoot()
 		{
 			return;
 		}
+
 		FVector ShotDirection = -Rotation.Vector();
 		UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), HitFlash, HitResult.Location, ShotDirection.Rotation());
 
@@ -74,6 +75,11 @@ void AGun::Shoot()
 		{
 			auto DamageTypeClass = UDamageType::StaticClass();
 			UGameplayStatics::ApplyDamage(HitActor, Damage, OwnerController, this, DamageTypeClass);
+			UPrimitiveComponent *Component = HitResult.GetComponent();
+			if (Component)
+			{
+				Component->AddRadialImpulse(HitResult.Location, BulletRadius, BulletStrength, ERadialImpulseFalloff::RIF_Constant);
+			}
 		}
 	}
 }

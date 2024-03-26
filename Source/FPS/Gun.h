@@ -46,5 +46,12 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float Damage = 10.f;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float BulletRadius = 5.f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float BulletStrength = 1000.f;
+
+	
 	void Shoot();
 };
