@@ -17,14 +17,26 @@ public:
 	// Sets default values for this actor's properties
 	AItemBase();
 
+	UFUNCTION(BlueprintPure)
+	FString GetName() const
+	{
+		return Name;
+	}
+
+	UFUNCTION(BlueprintPure)
+	FString GetDetail() const
+	{
+		return Detail;
+	}
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, Category = "Item")
 	UStaticMeshComponent *Mesh;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Item")
 	USphereComponent *Collision;
 
 	virtual void UseItem();
@@ -33,4 +45,11 @@ protected:
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+private:
+	UPROPERTY(VisibleAnywhere, Category = "Item")
+	FString Name;
+
+	UPROPERTY(VisibleAnywhere, Category = "Item")
+	FString Detail;
 };

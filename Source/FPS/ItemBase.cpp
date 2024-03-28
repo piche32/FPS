@@ -26,6 +26,9 @@ void AItemBase::BeginPlay()
 	{
 		Collision->OnComponentBeginOverlap.AddDynamic(this, &AItemBase::GetItem);
 	}
+
+	Name = "ItemBase";
+	Detail = "Test Item";
 }
 
 void AItemBase::UseItem()
