@@ -7,6 +7,7 @@
 #include "ShooterPlayerController.generated.h"
 
 class UInventoryManagerComponent;
+class UUserWidget;
 
 UCLASS()
 class FPS_API AShooterPlayerController : public APlayerController
@@ -16,7 +17,13 @@ class FPS_API AShooterPlayerController : public APlayerController
 public:
 	AShooterPlayerController();
 
+protected:
+	virtual void BeginPlay() override;
+
 private:
 	UPROPERTY(VisibleAnywhere)
 	UInventoryManagerComponent *InventoryManager;
+
+	UPROPERTY(EditAnywhere, Category = "UI")
+	TSubclassOf<UUserWidget> HUDClass;
 };

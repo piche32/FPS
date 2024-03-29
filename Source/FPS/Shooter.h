@@ -28,6 +28,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	AGun *Gun;
 
+	UFUNCTION(BlueprintPure)
+	float GetHPPercent() const;
+
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
