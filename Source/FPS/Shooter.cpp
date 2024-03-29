@@ -43,6 +43,11 @@ void AShooter::BeginPlay()
 	}
 }
 
+float AShooter::GetHPPercent() const
+{
+	return HealthComponent->GetHPPercent(); 
+}
+
 // Called every frame
 void AShooter::Tick(float DeltaTime)
 {
@@ -111,7 +116,7 @@ float AShooter::TakeDamage(float DamageAmount, struct FDamageEvent const &Damage
 }
 
 void AShooter::OnShoot()
-{ 
+{
 	if (Gun)
 	{
 		Gun->PullTrigger();

@@ -20,6 +20,7 @@ public:
 	UFUNCTION(BlueprintPure)
 	bool IsDead() const;
 
+	float GetHPPercent() const;
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
