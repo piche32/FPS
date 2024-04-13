@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "InventoryManagerComponent.generated.h"
 
+class AShooterPlayerController;
 class AItemBase;
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
@@ -28,4 +29,8 @@ public:
 private:
 	UPROPERTY(VisibleAnywhere)
 	TArray<AItemBase *> InventoryList;
+
+	void AddItem(AItemBase *Item);
+
+	friend AShooterPlayerController;
 };

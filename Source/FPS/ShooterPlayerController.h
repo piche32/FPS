@@ -4,10 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "InventoryManagerComponent.h"
+#include "ItemBase.h"
 #include "ShooterPlayerController.generated.h"
 
-class UInventoryManagerComponent;
-class UUserWidget;
+class UHUDUI;
+class UInputAction;
+struct FInputActionValue;
 
 UCLASS()
 class FPS_API AShooterPlayerController : public APlayerController
@@ -17,13 +20,56 @@ class FPS_API AShooterPlayerController : public APlayerController
 public:
 	AShooterPlayerController();
 
+	void PickupItem(class AItemBase *Item);
+	UHUDUI *GetHUD()
+	{
+		return HUD;
+	}
+	UInventoryManagerComponent *GetInventoryManager()
+	{
+		return InventoryManager;
+	}
+
 protected:
 	virtual void BeginPlay() override;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
+	TSubclassOf<UHUDUI> HUDClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
+	UHUDUI *HUD;
 
 private:
 	UPROPERTY(VisibleAnywhere)
 	UInventoryManagerComponent *InventoryManager;
 
+	UPROPERTY(EditDefaultsOnly, Category = Input)
+	UInputAction *PickupAction;
+
+	UPROPERTY(EditDefaultsOnly, Category = Input)
+	UInputAction *InventoryAction;
+
+	void Pickup(const FInputActionValue &InputActionValue);
+	void ToggleInventory(const FInputActionValue &InputActionValue);
+	void OpenInventory();
+	void CloseInventory();
+
+	bool IsInventoryDelay = false;
+
+	void FinishTogglingInventory();
+
+	const TArray<AItemBase *> GetInventoryList()
+	{
+		return InventoryManager->InventoryList;
+	}
+
+protected:
 	UPROPERTY(EditAnywhere, Category = "UI")
-	TSubclassOf<UUserWidget> HUDClass;
+	float InventoryDelayTime = 0.5f;
+
+	virtual void SetupInputComponent() override;
+
+public:
+	DECLARE_DELEGATE_OneParam(FPickupDelegate, AShooterPlayerController *);
+	FPickupDelegate PickupDelegate;
 };

@@ -36,16 +36,15 @@ void AShooter::BeginPlay()
 	Gun = GetWorld()->SpawnActor<AGun>(GunClass);
 	Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("WeaponSocket"));
 	Gun->SetOwner(this);
-
-	if (HealthComponent)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Shooter Health"));
-	}
 }
 
 float AShooter::GetHPPercent() const
 {
-	return HealthComponent->GetHPPercent(); 
+	if (HealthComponent)
+	{
+		return HealthComponent->GetHPPercent();
+	}
+	return -1;
 }
 
 // Called every frame

@@ -12,13 +12,15 @@ UInventoryManagerComponent::UInventoryManagerComponent()
 	// ...
 }
 
+void UInventoryManagerComponent::AddItem(AItemBase *Item)
+{
+	InventoryList.Add(Item);
+}
+
 // Called when the game starts
 void UInventoryManagerComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	AItemBase *testItem = GetWorld()->SpawnActor<AItemBase>();
-	InventoryList.Add(testItem);
 }
 
 // Called every frame
