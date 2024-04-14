@@ -2,37 +2,23 @@
 
 #include "HUDUI.h"
 #include "InventoryUI.h"
-#include "ItemBase.h"
-#include "ItemMenuUI.h"
-#include "Components/Button.h"
 
-void UHUDUI::RefreshInventoryWidget(const TArray<AItemBase *> &InventoryList)
+void UHUDUI::RefreshInventoryWidget()
 {
-    ActivateInventory = true;
-    Inventory->Refresh(InventoryList);
+    InventoryUI->Refresh();
 }
 
 void UHUDUI::OpenInventoryUI()
 {
-    Inventory->SetVisible(true);
+    InventoryUI->Open();
 }
 
 void UHUDUI::CloseInventoryUI()
 {
-    Inventory->SetVisible(false);
-    ItemMenu->SetVisible(false);
-    ClickedItemIndex = -1;
+    InventoryUI->Close();
 }
 
 bool UHUDUI::GetIsInventoryVisible()
 {
-    return Inventory->IsVisible();
-}
-
-void UHUDUI::OnClickInventorySlot(const int Index, FText ActionText)
-{
-    ActivateInventory = false;
-    ClickedItemIndex = Index;
-    ItemMenu->SetVisible(true);
-    ItemMenu->SetActionText(ActionText);
+    return InventoryUI->GetIsInventoryVisible();
 }

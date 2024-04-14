@@ -16,7 +16,9 @@ void UInventorySlotUI::SetImage(UTexture2D *Texture)
 
 void UInventorySlotUI::NativeConstruct()
 {
-    AShooterPlayerController *PlayerController = Cast<AShooterPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+    AShooterPlayerController *PlayerController =
+        Cast<AShooterPlayerController>(
+            UGameplayStatics::GetPlayerController(GetWorld(), 0));
     if (PlayerController)
     {
         HUD = PlayerController->GetHUD();
@@ -25,8 +27,8 @@ void UInventorySlotUI::NativeConstruct()
 
 void UInventorySlotUI::OnClick()
 {
-    if (HUD)
+    if (OnSlotClicked.IsBound())
     {
-        HUD->OnClickInventorySlot(Index, ActionText);
+        OnSlotClicked.Execute(Index, ActionText);
     }
 }

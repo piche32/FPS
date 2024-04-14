@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "InventoryManagerComponent.h"
-#include "ItemBase.h"
 #include "ShooterPlayerController.generated.h"
 
 class UHUDUI;
@@ -57,11 +56,6 @@ private:
 	bool IsInventoryDelay = false;
 
 	void FinishTogglingInventory();
-
-	const TArray<AItemBase *> GetInventoryList()
-	{
-		return InventoryManager->InventoryList;
-	}
 
 protected:
 	UPROPERTY(EditAnywhere, Category = "UI")

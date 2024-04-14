@@ -6,7 +6,6 @@
 #include "Components/ActorComponent.h"
 #include "InventoryManagerComponent.generated.h"
 
-class AShooterPlayerController;
 class AItemBase;
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
@@ -17,6 +16,10 @@ class FPS_API UInventoryManagerComponent : public UActorComponent
 public:
 	// Sets default values for this component's properties
 	UInventoryManagerComponent();
+	const TArray<AItemBase *> GetInventoryList()
+	{
+		return InventoryList;
+	}
 
 protected:
 	// Called when the game starts
@@ -32,5 +35,5 @@ private:
 
 	void AddItem(AItemBase *Item);
 
-	friend AShooterPlayerController;
+	friend class AShooterPlayerController;
 };

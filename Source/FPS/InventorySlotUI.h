@@ -37,5 +37,7 @@ private:
 	UFUNCTION()
 	void OnClick();
 
+	DECLARE_DELEGATE_TwoParams(FOnSlotClicked, const int, FText);
+	FOnSlotClicked OnSlotClicked;
 	friend UInventoryUI;
 };

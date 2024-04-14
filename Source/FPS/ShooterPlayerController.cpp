@@ -36,7 +36,7 @@ void AShooterPlayerController::PickupItem(class AItemBase *Item)
         return;
     }
     InventoryManager->AddItem(Item);
-    HUD->RefreshInventoryWidget(GetInventoryList());
+    HUD->RefreshInventoryWidget();
 }
 
 void AShooterPlayerController::SetupInputComponent()

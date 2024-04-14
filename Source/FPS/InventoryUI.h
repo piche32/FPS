@@ -8,12 +8,19 @@
 
 class AItemBase;
 class UInventorySlotUI;
+class UItemMenuUI;
+class UWidget;
+
 UCLASS()
 class FPS_API UInventoryUI : public UUserWidget
 {
 	GENERATED_BODY()
 
 private:
+	class UInventoryManagerComponent *InventoryManager;
+	int ClickedItemIndex = -1;
+	bool ActivateInventory = true;
+
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (BindWidget))
 	UInventorySlotUI *Slot1;
@@ -27,9 +34,23 @@ protected:
 	UInventorySlotUI *Slot5;
 
 	TArray<UInventorySlotUI *> Slots;
+
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	UItemMenuUI *ItemMenu;
+
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	UWidget *Inventory;
 	virtual void NativeConstruct() override;
 
 public:
-	void SetVisible(bool Visible);
-	void Refresh(const TArray<AItemBase *> &InventoryList);
+	void SetVisible(UWidget *Widget, bool Visible);
+	void Refresh();
+	bool GetActivateInventory()
+	{
+		return ActivateInventory;
+	}
+	bool GetIsInventoryVisible();
+	void Open();
+	void Close();
+	void OnClickInventorySlot(const int Index, FText ActionText);
 };

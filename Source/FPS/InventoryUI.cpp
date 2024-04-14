@@ -7,9 +7,19 @@
 #include "Components/Button.h"
 #include "InventoryManagerComponent.h"
 #include "ShooterPlayerController.h"
+#include "Components/Widget.h"
+#include "Kismet/GameplayStatics.h"
+#include "ItemMenuUI.h"
 
 void UInventoryUI::NativeConstruct()
 {
+    AShooterPlayerController *PlayerController =
+        Cast<AShooterPlayerController>(
+            UGameplayStatics::GetPlayerController(GetWorld(), 0));
+    if (PlayerController)
+    {
+        InventoryManager = PlayerController->GetInventoryManager();
+    }
     Slots.Add(Slot1);
     Slots.Add(Slot2);
     Slots.Add(Slot3);
@@ -22,20 +32,22 @@ void UInventoryUI::NativeConstruct()
     }
 }
 
-void UInventoryUI::SetVisible(bool Visible)
+void UInventoryUI::SetVisible(UWidget *Widget, bool Visible)
 {
     if (Visible)
     {
-        SetVisibility(ESlateVisibility::Visible);
+        Widget->SetVisibility(ESlateVisibility::Visible);
     }
     else
     {
-        SetVisibility(ESlateVisibility::Hidden);
+        Widget->SetVisibility(ESlateVisibility::Hidden);
     }
 }
 
-void UInventoryUI::Refresh(const TArray<AItemBase *> &InventoryList)
+void UInventoryUI::Refresh()
 {
+    ActivateInventory = true;
+    const TArray<AItemBase *> InventoryList = InventoryManager->GetInventoryList();
     for (int i = 0; i < Slots.Num(); i++)
     {
         if (i < InventoryList.Num())
@@ -45,6 +57,7 @@ void UInventoryUI::Refresh(const TArray<AItemBase *> &InventoryList)
             Slots[i]->SetImage(InventoryList[i]->GetThumbnail());
             Slots[i]->Button->SetIsEnabled(true);
             Slots[i]->Button->OnClicked.AddDynamic(Slots[i], &UInventorySlotUI::OnClick);
+            Slots[i]->OnSlotClicked.BindUObject(this, &UInventoryUI::OnClickInventorySlot);
         }
         else
         {
@@ -54,4 +67,29 @@ void UInventoryUI::Refresh(const TArray<AItemBase *> &InventoryList)
             Slots[i]->Button->SetIsEnabled(false);
         }
     }
+}
+
+bool UInventoryUI::GetIsInventoryVisible()
+{
+    return Inventory->IsVisible();
+}
+
+void UInventoryUI::Open()
+{
+    SetVisible(Inventory, true);
+}
+
+void UInventoryUI::Close()
+{
+    SetVisible(Inventory, false);
+    SetVisible(ItemMenu, false);
+    ClickedItemIndex = -1;
+}
+
+void UInventoryUI::OnClickInventorySlot(const int Index, FText ActionText)
+{
+    ActivateInventory = false;
+    ClickedItemIndex = Index;
+    SetVisible(ItemMenu, true);
+    ItemMenu->SetActionText(ActionText);
 }
