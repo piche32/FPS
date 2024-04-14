@@ -38,7 +38,7 @@ void AShooter::BeginPlay()
 	Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("WeaponSocket"));
 	Gun->SetOwner(this);
 
-	DropPosition = Cast<USceneComponent>(GetDefaultSubobjectByName(TEXT("DropLocation")));
+	DropPosition = Cast<USceneComponent>(GetDefaultSubobjectByName(TEXT("Drop Spot")));
 }
 
 float AShooter::GetHPPercent() const

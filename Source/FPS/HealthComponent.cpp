@@ -46,3 +46,9 @@ float UHealthComponent::GetHPPercent() const
 {
 	return Health / MaxHealth;
 }
+
+void UHealthComponent::AddHealth(float Value)
+{
+	Health += Value;
+	Health = FMath::Min(Health, MaxHealth);
+}

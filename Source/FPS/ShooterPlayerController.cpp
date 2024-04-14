@@ -130,4 +130,8 @@ void AShooterPlayerController::UseItem(const int ItemIndex)
     if (!Item)
         return;
     Item->Action();
+    if (Item->IsConsumable())
+    {
+        InventoryManager->RemoveItem(ItemIndex);
+    }
 }

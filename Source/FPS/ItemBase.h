@@ -47,6 +47,11 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Item")
 	USphereComponent *Collision;
 
+	UPROPERTY(EditAnywhere, Category = "Info")
+	FText Detail = FText::FromString(TEXT("Detail"));
+
+	bool bConsumable = true;
+
 public:
 	// Sets default values for this actor's properties
 	AItemBase();
@@ -83,6 +88,10 @@ public:
 		return Thumbnail;
 	}
 
+	bool IsConsumable()
+	{
+		return bConsumable;
+	}
 	UFUNCTION(BlueprintCallable)
 	void ReadyToPickup(UPrimitiveComponent *OverlappedComp, AActor *OtherActor, UPrimitiveComponent *OhterComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
 	UFUNCTION(BlueprintCallable)

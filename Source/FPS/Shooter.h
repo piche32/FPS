@@ -69,6 +69,9 @@ public:
 	void OnShoot();
 
 	FVector GetDropPosition();
+	UHealthComponent *GetHealthComponent(){
+		return HealthComponent;
+	}
 
 private:
 	void Move(const FInputActionValue &InputActionValue);

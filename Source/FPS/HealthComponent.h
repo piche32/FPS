@@ -21,6 +21,8 @@ public:
 	bool IsDead() const;
 
 	float GetHPPercent() const;
+
+	void AddHealth(float Value);
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
