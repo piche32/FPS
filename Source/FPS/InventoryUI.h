@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "UIPopUpInterface.h"
 #include "InventoryUI.generated.h"
 
 class AItemBase;
@@ -11,6 +12,7 @@ class UInventorySlotUI;
 class UItemMenuUI;
 class UWidget;
 UCLASS()
+class FPS_API UInventoryUI : public UUserWidget, public IUIPopUpInterface
 {
 	GENERATED_BODY()
 
@@ -48,11 +50,12 @@ public:
 		return ActivateInventory;
 	}
 	bool GetIsInventoryVisible();
-	void Open();
-	void Close();
 	void SetVisible(UWidget *Widget, bool Visible);
 
 	void Refresh();
 
+	virtual void Open() override;
+	virtual void Close() override;
+	
 	void OnClickInventorySlot(const int Index, FText ActionText);
 };

@@ -4,12 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "UIPopUpInterface.h"
 #include "ItemMenuUI.generated.h"
 
 class UButton;
 
 UCLASS()
-class FPS_API UItemMenuUI : public UUserWidget
+class FPS_API UItemMenuUI : public UUserWidget, public IUIPopUpInterface
 {
 	GENERATED_BODY()
 
@@ -26,7 +27,5 @@ protected:
 public:
 	void SetVisible(bool Visible);
 	void SetActionText(FText Value);
-
-private:
-	void Close();
+	virtual void Close() override;
 };
