@@ -16,22 +16,7 @@ class FPS_API AShooterPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 
-public:
-	AShooterPlayerController();
-
-	void PickupItem(class AItemBase *Item);
-	UHUDUI *GetHUD()
-	{
-		return HUD;
-	}
-	UInventoryManagerComponent *GetInventoryManager()
-	{
-		return InventoryManager;
-	}
-
 protected:
-	virtual void BeginPlay() override;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
 	TSubclassOf<UHUDUI> HUDClass;
 
@@ -48,6 +33,23 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = Input)
 	UInputAction *InventoryAction;
 
+public:
+	AShooterPlayerController();
+
+protected:
+	virtual void BeginPlay() override;
+
+public:
+	UHUDUI *GetHUD()
+	{
+		return HUD;
+	}
+	UInventoryManagerComponent *GetInventoryManager()
+	{
+		return InventoryManager;
+	}
+
+private:
 	void Pickup(const FInputActionValue &InputActionValue);
 	void ToggleInventory(const FInputActionValue &InputActionValue);
 	void OpenInventory();
@@ -66,4 +68,8 @@ protected:
 public:
 	DECLARE_DELEGATE_OneParam(FPickupDelegate, AShooterPlayerController *);
 	FPickupDelegate PickupDelegate;
+
+	void PickupItem(class AItemBase *Item);
+	void DropItem(const int ItemIndex);
+	void UseItem(const int ItemIndex);
 };

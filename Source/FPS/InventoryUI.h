@@ -44,6 +44,15 @@ protected:
 protected:
 	virtual void NativeConstruct() override;
 
+private:
+	void InitializeItemMenu();
+	UFUNCTION()
+	void CloseItemMenu();
+	UFUNCTION()
+	void OnClickDropButton();
+	UFUNCTION()
+	void OnClickActionButton();
+
 public:
 	bool GetActivateInventory()
 	{
@@ -56,6 +65,6 @@ public:
 
 	virtual void Open() override;
 	virtual void Close() override;
-	
+
 	void OnClickInventorySlot(const int Index, FText ActionText);
 };

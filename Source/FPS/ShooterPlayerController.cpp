@@ -7,6 +7,8 @@
 #include "InputActionValue.h"
 #include "EnhancedInputComponent.h"
 #include "Components/InputComponent.h"
+#include "ItemBase.h"
+#include "Shooter.h"
 
 AShooterPlayerController::AShooterPlayerController()
 {
@@ -22,21 +24,6 @@ void AShooterPlayerController::BeginPlay()
     {
         HUD->AddToViewport();
     }
-}
-
-void AShooterPlayerController::PickupItem(class AItemBase *Item)
-{
-    if (!InventoryManager)
-    {
-        return;
-    }
-
-    if (!HUD)
-    {
-        return;
-    }
-    InventoryManager->AddItem(Item);
-    HUD->RefreshInventoryWidget();
 }
 
 void AShooterPlayerController::SetupInputComponent()
@@ -98,4 +85,49 @@ void AShooterPlayerController::CloseInventory()
 void AShooterPlayerController::FinishTogglingInventory()
 {
     IsInventoryDelay = false;
+}
+
+void AShooterPlayerController::PickupItem(AItemBase *Item)
+{
+    if (!InventoryManager)
+    {
+        return;
+    }
+
+    if (!HUD)
+    {
+        return;
+    }
+    InventoryManager->AddItem(Item);
+    HUD->RefreshInventoryWidget();
+}
+
+void AShooterPlayerController::DropItem(const int ItemIndex)
+{
+    if (!InventoryManager)
+    {
+        return;
+    }
+
+    AItemBase *Item = InventoryManager->GetItem(ItemIndex);
+    if (!Item)
+        return;
+    AShooter *Shooter = Cast<AShooter>(GetPawn());
+    if (!Shooter)
+        return;
+    Item->Drop(Shooter->GetDropPosition());
+
+    InventoryManager->RemoveItem(ItemIndex);
+}
+
+void AShooterPlayerController::UseItem(const int ItemIndex)
+{
+    if (!InventoryManager)
+    {
+        return;
+    }
+    AItemBase *Item = InventoryManager->GetItem(ItemIndex);
+    if (!Item)
+        return;
+    Item->Action();
 }

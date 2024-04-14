@@ -12,9 +12,19 @@ UInventoryManagerComponent::UInventoryManagerComponent()
 	// ...
 }
 
+AItemBase *UInventoryManagerComponent::GetItem(const int ItemIndex)
+{
+	return InventoryList[ItemIndex];
+}
+
 void UInventoryManagerComponent::AddItem(AItemBase *Item)
 {
 	InventoryList.Add(Item);
+}
+
+void UInventoryManagerComponent::RemoveItem(const int Index)
+{
+	InventoryList.RemoveAt(Index);
 }
 
 // Called when the game starts

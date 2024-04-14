@@ -10,6 +10,7 @@
 #include "Components/Widget.h"
 #include "Kismet/GameplayStatics.h"
 #include "ItemMenuUI.h"
+#include "InventoryManagerComponent.h"
 
 void UInventoryUI::NativeConstruct()
 {
@@ -30,8 +31,58 @@ void UInventoryUI::NativeConstruct()
     {
         Slots[i]->Button->SetIsEnabled(false);
     }
+
+    InitializeItemMenu();
 }
 
+void UInventoryUI::InitializeItemMenu()
+{
+    if (!ItemMenu)
+        return;
+    if (ItemMenu->CancelButton)
+    {
+        ItemMenu->CancelButton->OnClicked.AddDynamic(this, &UInventoryUI::CloseItemMenu);
+    }
+    if (ItemMenu->DropButton)
+    {
+        ItemMenu->DropButton->OnClicked.AddDynamic(this, &UInventoryUI::OnClickDropButton);
+    }
+    if (ItemMenu->ActionButton)
+    {
+        ItemMenu->ActionButton->OnClicked.AddDynamic(this, &UInventoryUI::OnClickActionButton);
+    }
+}
+
+void UInventoryUI::CloseItemMenu()
+{
+    ActivateInventory = true;
+    ClickedItemIndex = -1;
+    ItemMenu->Close();
+}
+
+void UInventoryUI::OnClickDropButton()
+{
+    AShooterPlayerController *PlayerController =
+        Cast<AShooterPlayerController>(
+            UGameplayStatics::GetPlayerController(GetWorld(), 0));
+    if (!PlayerController)
+        return;
+    PlayerController->DropItem(ClickedItemIndex);
+    Refresh();
+    CloseItemMenu();
+}
+
+void UInventoryUI::OnClickActionButton()
+{
+    AShooterPlayerController *PlayerController =
+        Cast<AShooterPlayerController>(
+            UGameplayStatics::GetPlayerController(GetWorld(), 0));
+    if (!PlayerController)
+        return;
+    PlayerController->UseItem(ClickedItemIndex);
+    Refresh();
+    CloseItemMenu();
+}
 
 bool UInventoryUI::GetIsInventoryVisible()
 {

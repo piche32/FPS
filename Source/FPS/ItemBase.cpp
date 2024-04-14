@@ -88,11 +88,6 @@ void AItemBase::Pickup(AShooterPlayerController *Controller)
 	SetActorEnableCollision(false);
 }
 
-void AItemBase::Action()
-{
-	UE_LOG(LogTemp, Warning, TEXT("ItemBase->Action"));
-}
-
 void AItemBase::ReadyToPickup(UPrimitiveComponent *OverlappedComp, AActor *OtherActor, UPrimitiveComponent *OhterComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 {
 	Widget->SetVisibility(true);
@@ -103,4 +98,16 @@ void AItemBase::PreventToPickup(UPrimitiveComponent *OverlappedComp, AActor *Oth
 {
 	Widget->SetVisibility(false);
 	IsInRange = false;
+}
+
+void AItemBase::Action()
+{
+	UE_LOG(LogTemp, Warning, TEXT("ItemBase->Action"));
+}
+
+void AItemBase::Drop(FVector DropLocation)
+{
+	SetActorLocation(DropLocation);
+	SetActorHiddenInGame(false);
+	SetActorEnableCollision(true);
 }

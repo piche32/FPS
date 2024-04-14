@@ -29,11 +29,11 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 
+	AItemBase *GetItem(const int ItemIndex);
+	void AddItem(AItemBase *Item);
+	void RemoveItem(const int Index);
+
 private:
 	UPROPERTY(VisibleAnywhere)
 	TArray<AItemBase *> InventoryList;
-
-	void AddItem(AItemBase *Item);
-
-	friend class AShooterPlayerController;
 };

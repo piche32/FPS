@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "UIPopUpInterface.h"
+#include "InventoryUI.h"
 #include "ItemMenuUI.generated.h"
 
 class UButton;
@@ -13,6 +14,9 @@ UCLASS()
 class FPS_API UItemMenuUI : public UUserWidget, public IUIPopUpInterface
 {
 	GENERATED_BODY()
+
+private:
+	friend UInventoryUI;
 
 protected:
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))

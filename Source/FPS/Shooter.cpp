@@ -8,6 +8,7 @@
 #include "Components/InputComponent.h"
 #include "HealthComponent.h"
 #include "Gun.h"
+#include "Components/SceneComponent.h"
 
 // Sets default values
 AShooter::AShooter()
@@ -36,6 +37,8 @@ void AShooter::BeginPlay()
 	Gun = GetWorld()->SpawnActor<AGun>(GunClass);
 	Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("WeaponSocket"));
 	Gun->SetOwner(this);
+
+	DropPosition = Cast<USceneComponent>(GetDefaultSubobjectByName(TEXT("DropLocation")));
 }
 
 float AShooter::GetHPPercent() const
@@ -65,6 +68,21 @@ void AShooter::SetupPlayerInputComponent(UInputComponent *PlayerInputComponent)
 		Input->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ACharacter::Jump);
 		Input->BindAction(ShootAction, ETriggerEvent::Triggered, this, &AShooter::Shoot);
 	}
+}
+
+void AShooter::OnShoot()
+{
+	if (Gun)
+	{
+		Gun->PullTrigger();
+	}
+}
+
+FVector AShooter::GetDropPosition()
+{
+	if(!DropPosition)
+		return GetActorLocation();
+	return DropPosition->GetComponentLocation();
 }
 
 void AShooter::Move(const FInputActionValue &InputActionValue)
@@ -112,12 +130,4 @@ float AShooter::TakeDamage(float DamageAmount, struct FDamageEvent const &Damage
 	}
 
 	return DamageAmount;
-}
-
-void AShooter::OnShoot()
-{
-	if (Gun)
-	{
-		Gun->PullTrigger();
-	}
 }

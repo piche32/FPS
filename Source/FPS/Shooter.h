@@ -10,36 +10,13 @@ class UInputMappingContext;
 class UInputAction;
 class AGun;
 class UHealthComponent;
+class USceneComponent;
 struct FInputActionValue;
 
 UCLASS()
 class FPS_API AShooter : public ACharacter
 {
 	GENERATED_BODY()
-
-public:
-	// Sets default values for this character's properties
-	AShooter();
-
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	AGun *Gun;
-
-	UFUNCTION(BlueprintPure)
-	float GetHPPercent() const;
-
-public:
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent) override;
-
-	UFUNCTION(BlueprintCallable)
-	void OnShoot();
 
 private:
 	APlayerController *PlayerController;
@@ -65,12 +42,37 @@ private:
 	UPROPERTY(EditAnywhere, Category = Input)
 	UInputAction *ShootAction;
 
-	void Move(const FInputActionValue &InputActionValue);
-	void Look(const FInputActionValue &InputActionValue);
-	void Shoot(const FInputActionValue &InputActionValue);
-
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<AGun> GunClass;
 
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	AGun *Gun;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item")
+	USceneComponent *DropPosition;
+
+public:
+	AShooter();
+
+protected:
+	virtual void BeginPlay() override;
+
+	UFUNCTION(BlueprintPure)
+	float GetHPPercent() const;
+
+public:
+	virtual void Tick(float DeltaTime) override;
+	virtual void SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent) override;
+
+	UFUNCTION(BlueprintCallable)
+	void OnShoot();
+
+	FVector GetDropPosition();
+
+private:
+	void Move(const FInputActionValue &InputActionValue);
+	void Look(const FInputActionValue &InputActionValue);
+	void Shoot(const FInputActionValue &InputActionValue);
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, AController *EventInstigator, AActor *DamageCauser) override;
 };
