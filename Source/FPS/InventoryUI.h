@@ -10,9 +10,7 @@ class AItemBase;
 class UInventorySlotUI;
 class UItemMenuUI;
 class UWidget;
-
 UCLASS()
-class FPS_API UInventoryUI : public UUserWidget
 {
 	GENERATED_BODY()
 
@@ -40,11 +38,11 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	UWidget *Inventory;
+
+protected:
 	virtual void NativeConstruct() override;
 
 public:
-	void SetVisible(UWidget *Widget, bool Visible);
-	void Refresh();
 	bool GetActivateInventory()
 	{
 		return ActivateInventory;
@@ -52,5 +50,9 @@ public:
 	bool GetIsInventoryVisible();
 	void Open();
 	void Close();
+	void SetVisible(UWidget *Widget, bool Visible);
+
+	void Refresh();
+
 	void OnClickInventorySlot(const int Index, FText ActionText);
 };

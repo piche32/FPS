@@ -2,9 +2,7 @@
 
 #include "InventorySlotUI.h"
 #include "Components/Image.h"
-#include "Kismet/GameplayStatics.h"
-#include "ShooterPlayerController.h"
-#include "HUDUI.h"
+#include "Components/Button.h"
 
 void UInventorySlotUI::SetImage(UTexture2D *Texture)
 {
@@ -16,13 +14,9 @@ void UInventorySlotUI::SetImage(UTexture2D *Texture)
 
 void UInventorySlotUI::NativeConstruct()
 {
-    AShooterPlayerController *PlayerController =
-        Cast<AShooterPlayerController>(
-            UGameplayStatics::GetPlayerController(GetWorld(), 0));
-    if (PlayerController)
-    {
-        HUD = PlayerController->GetHUD();
-    }
+    if (!Button)
+        return;
+    Button->OnClicked.AddDynamic(this, &UInventorySlotUI::OnClick);
 }
 
 void UInventorySlotUI::OnClick()

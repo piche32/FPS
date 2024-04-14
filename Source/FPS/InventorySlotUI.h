@@ -32,7 +32,6 @@ protected:
 private:
 	int Index = -1;
 	FText ActionText;
-	class UHUDUI *HUD;
 
 	UFUNCTION()
 	void OnClick();

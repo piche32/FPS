@@ -32,6 +32,12 @@ void UInventoryUI::NativeConstruct()
     }
 }
 
+
+bool UInventoryUI::GetIsInventoryVisible()
+{
+    return Inventory->IsVisible();
+}
+
 void UInventoryUI::SetVisible(UWidget *Widget, bool Visible)
 {
     if (Visible)
@@ -56,7 +62,6 @@ void UInventoryUI::Refresh()
             Slots[i]->ActionText = InventoryList[i]->GetActionText();
             Slots[i]->SetImage(InventoryList[i]->GetThumbnail());
             Slots[i]->Button->SetIsEnabled(true);
-            Slots[i]->Button->OnClicked.AddDynamic(Slots[i], &UInventorySlotUI::OnClick);
             Slots[i]->OnSlotClicked.BindUObject(this, &UInventoryUI::OnClickInventorySlot);
         }
         else
@@ -67,11 +72,6 @@ void UInventoryUI::Refresh()
             Slots[i]->Button->SetIsEnabled(false);
         }
     }
-}
-
-bool UInventoryUI::GetIsInventoryVisible()
-{
-    return Inventory->IsVisible();
 }
 
 void UInventoryUI::Open()
