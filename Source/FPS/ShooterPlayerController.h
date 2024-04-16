@@ -66,7 +66,7 @@ protected:
 	virtual void SetupInputComponent() override;
 
 public:
-	DECLARE_DELEGATE_OneParam(FPickupDelegate, AShooterPlayerController *);
+	DECLARE_MULTICAST_DELEGATE_OneParam(FPickupDelegate, AShooterPlayerController *);
 	FPickupDelegate PickupDelegate;
 
 	void PickupItem(class AItemBase *Item);

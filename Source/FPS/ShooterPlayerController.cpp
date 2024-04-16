@@ -42,7 +42,7 @@ void AShooterPlayerController::SetupInputComponent()
 
 void AShooterPlayerController::Pickup(const FInputActionValue &InputActionValue)
 {
-    PickupDelegate.ExecuteIfBound(this);
+    PickupDelegate.Broadcast(this);
 }
 
 void AShooterPlayerController::ToggleInventory(const FInputActionValue &InputActionValue)

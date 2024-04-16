@@ -39,7 +39,7 @@ void AItemBase::BeginPlay()
 	AShooterPlayerController *PlayerController = Cast<AShooterPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 	if (PlayerController)
 	{
-		PlayerController->PickupDelegate.BindUObject(this, &AItemBase::Pickup);
+		PlayerController->PickupDelegate.AddUObject(this, &AItemBase::Pickup);
 	}
 }
 
