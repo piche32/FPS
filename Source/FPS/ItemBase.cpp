@@ -90,14 +90,23 @@ void AItemBase::Pickup(AShooterPlayerController *Controller)
 
 void AItemBase::ReadyToPickup(UPrimitiveComponent *OverlappedComp, AActor *OtherActor, UPrimitiveComponent *OhterComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 {
-	Widget->SetVisibility(true);
-	IsInRange = true;
+	AShooter *Shooter = Cast<AShooter>(OtherActor);
+	if (Shooter && Cast<AShooterPlayerController>(Shooter->GetController()))
+	{
+
+		Widget->SetVisibility(true);
+		IsInRange = true;
+	}
 }
 
 void AItemBase::PreventToPickup(UPrimitiveComponent *OverlappedComp, AActor *OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex)
 {
+	AShooter *Shooter = Cast<AShooter>(OtherActor);
+	if (Shooter && Cast<AShooterPlayerController>(Shooter->GetController()))
+	{
 	Widget->SetVisibility(false);
 	IsInRange = false;
+	}
 }
 
 void AItemBase::Action()
