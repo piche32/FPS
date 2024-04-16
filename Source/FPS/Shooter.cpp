@@ -9,6 +9,7 @@
 #include "HealthComponent.h"
 #include "Gun.h"
 #include "Components/SceneComponent.h"
+#include "ShooterPlayerController.h"
 
 // Sets default values
 AShooter::AShooter()
@@ -24,7 +25,7 @@ void AShooter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	PlayerController = Cast<APlayerController>(Controller);
+	PlayerController = Cast<AShooterPlayerController>(Controller);
 	if (PlayerController)
 	{
 		if (UEnhancedInputLocalPlayerSubsystem *Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
@@ -80,7 +81,7 @@ void AShooter::OnShoot()
 
 FVector AShooter::GetDropPosition()
 {
-	if(!DropPosition)
+	if (!DropPosition)
 		return GetActorLocation();
 	return DropPosition->GetComponentLocation();
 }
@@ -89,6 +90,8 @@ void AShooter::Move(const FInputActionValue &InputActionValue)
 {
 	if (PlayerController)
 	{
+		if (!PlayerController->GetIsMovable())
+			return;
 		const FVector2D Value = InputActionValue.Get<FVector2D>();
 		const FRotator MovementRotation(0.0f, PlayerController->GetControlRotation().Yaw, 0.0f);
 
@@ -107,6 +110,8 @@ void AShooter::Move(const FInputActionValue &InputActionValue)
 
 void AShooter::Look(const FInputActionValue &InputActionValue)
 {
+	if (!PlayerController->GetIsMovable())
+		return;
 	const FVector2D LookAxisValue = InputActionValue.Get<FVector2D>();
 	if (PlayerController)
 	{
@@ -117,6 +122,8 @@ void AShooter::Look(const FInputActionValue &InputActionValue)
 
 void AShooter::Shoot(const FInputActionValue &InputActionValue)
 {
+	if (!PlayerController->GetIsMovable())
+		return;
 	OnShoot();
 }
 

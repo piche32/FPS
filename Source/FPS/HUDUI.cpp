@@ -22,3 +22,15 @@ bool UHUDUI::GetIsInventoryVisible()
 {
     return InventoryUI->GetIsInventoryVisible();
 }
+
+void UHUDUI::SetCrosshairVisible(bool Value)
+{
+    if (Value)
+    {
+        CrosshairUI->SetVisibility(ESlateVisibility::Visible);
+    }
+    else
+    {
+        CrosshairUI->SetVisibility(ESlateVisibility::Hidden);
+    }
+}

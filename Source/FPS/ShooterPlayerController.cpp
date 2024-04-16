@@ -42,6 +42,8 @@ void AShooterPlayerController::SetupInputComponent()
 
 void AShooterPlayerController::Pickup(const FInputActionValue &InputActionValue)
 {
+    if (!bIsMovable)
+        return;
     PickupDelegate.Broadcast(this);
 }
 
@@ -73,18 +75,34 @@ void AShooterPlayerController::ToggleInventory(const FInputActionValue &InputAct
 void AShooterPlayerController::OpenInventory()
 {
     HUD->OpenInventoryUI();
-    SetShowMouseCursor(true);
+    SetFocusOnUI();
 }
 
 void AShooterPlayerController::CloseInventory()
 {
     HUD->CloseInventoryUI();
-    SetShowMouseCursor(false);
+    SetFocusOnGameplay();
 }
 
 void AShooterPlayerController::FinishTogglingInventory()
 {
     IsInventoryDelay = false;
+}
+
+void AShooterPlayerController::SetFocusOnUI()
+{
+    bIsMovable = false;
+    SetShowMouseCursor(true);
+    SetInputMode(FInputModeGameAndUI());
+    HUD->SetCrosshairVisible(false);
+}
+
+void AShooterPlayerController::SetFocusOnGameplay()
+{
+    bIsMovable = true;
+    SetShowMouseCursor(false);
+    SetInputMode(FInputModeGameOnly());
+    HUD->SetCrosshairVisible(true);
 }
 
 void AShooterPlayerController::PickupItem(AItemBase *Item)

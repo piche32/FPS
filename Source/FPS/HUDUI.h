@@ -13,13 +13,20 @@ class FPS_API UHUDUI : public UUserWidget
 {
 	GENERATED_BODY()
 
+protected:
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	UInventoryUI *InventoryUI;
+
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	UWidget *CrosshairUI;
+
+private:
+	bool bIsCrosshairVisible = true;
+
 public:
 	void RefreshInventoryWidget();
 	void OpenInventoryUI();
 	void CloseInventoryUI();
 	bool GetIsInventoryVisible();
-
-protected:
-	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
-	UInventoryUI *InventoryUI;
+	void SetCrosshairVisible(bool Value);
 };

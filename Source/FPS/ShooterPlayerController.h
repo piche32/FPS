@@ -33,6 +33,8 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = Input)
 	UInputAction *InventoryAction;
 
+	bool bIsMovable = true;
+
 public:
 	AShooterPlayerController();
 
@@ -49,6 +51,9 @@ public:
 		return InventoryManager;
 	}
 
+	bool GetIsMovable(){
+		return bIsMovable;
+	}
 private:
 	void Pickup(const FInputActionValue &InputActionValue);
 	void ToggleInventory(const FInputActionValue &InputActionValue);
@@ -58,6 +63,9 @@ private:
 	bool IsInventoryDelay = false;
 
 	void FinishTogglingInventory();
+
+	void SetFocusOnUI();
+	void SetFocusOnGameplay();
 
 protected:
 	UPROPERTY(EditAnywhere, Category = "UI")

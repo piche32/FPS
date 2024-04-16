@@ -11,6 +11,7 @@ class UInputAction;
 class AGun;
 class UHealthComponent;
 class USceneComponent;
+class AShooterPlayerController;
 struct FInputActionValue;
 
 UCLASS()
@@ -19,7 +20,7 @@ class FPS_API AShooter : public ACharacter
 	GENERATED_BODY()
 
 private:
-	APlayerController *PlayerController;
+	AShooterPlayerController *PlayerController;
 
 	UPROPERTY(VisibleAnywhere)
 	UHealthComponent *HealthComponent;
