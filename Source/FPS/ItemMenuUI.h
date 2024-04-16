@@ -27,9 +27,12 @@ protected:
 	UButton *CancelButton;
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	class UTextBlock *ActionText;
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	class UTextBlock *DetailText;
 
 public:
 	void SetVisible(bool Visible);
 	void SetActionText(FText Value);
+	void SetDetailText(FText Value);
 	virtual void Close() override;
 };

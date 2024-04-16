@@ -143,4 +143,5 @@ void UInventoryUI::OnClickInventorySlot(const int Index, FText ActionText)
     ClickedItemIndex = Index;
     SetVisible(ItemMenu, true);
     ItemMenu->SetActionText(ActionText);
+    ItemMenu->SetDetailText(InventoryManager->GetItem(Index)->GetDetailText());
 }

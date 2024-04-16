@@ -20,6 +20,11 @@ void UItemMenuUI::SetActionText(FText Value)
     ActionText->SetText(Value);
 }
 
+void UItemMenuUI::SetDetailText(FText Value)
+{
+    DetailText->SetText(Value);
+}
+
 void UItemMenuUI::Close()
 {
     SetVisible(false);

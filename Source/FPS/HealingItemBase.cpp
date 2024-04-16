@@ -17,7 +17,7 @@ void AHealingItemBase::Action()
 
 AHealingItemBase::AHealingItemBase()
 {
-    Detail = FText::Format(NSLOCTEXT("UINamespace", "HealingItemDetailText", "사용 시, {0}만큼 회복!"), HealingAmount);
+    DetailText = FText::Format(NSLOCTEXT("UINamespace", "HealingItemDetailText", "사용 시, {0}만큼 회복!"), HealingAmount);
 }
 
 #undef LOCTEXT_NAMESPACE

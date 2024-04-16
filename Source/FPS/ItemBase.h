@@ -26,6 +26,7 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Info")
 	FText ActionText = FText::FromString(TEXT("Use"));
 
+
 	UPROPERTY(EditAnywhere, Category = "Info")
 	UTexture2D *Thumbnail;
 
@@ -47,11 +48,11 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Item")
 	USphereComponent *Collision;
 
-	UPROPERTY(EditAnywhere, Category = "Info")
-	FText Detail = FText::FromString(TEXT("Detail"));
-
 	bool bConsumable = true;
 
+	UPROPERTY(EditAnywhere, Category = "Info")
+	FText DetailText = FText::FromString(TEXT(""));
+	
 public:
 	// Sets default values for this actor's properties
 	AItemBase();
@@ -80,6 +81,12 @@ public:
 	FText GetActionText() const
 	{
 		return ActionText;
+	}
+
+	UFUNCTION(BlueprintPure)
+	FText GetDetailText() const
+	{
+		return DetailText;
 	}
 
 	UFUNCTION(BlueprintPure)
