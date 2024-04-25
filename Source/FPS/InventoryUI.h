@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "UIPopUpInterface.h"
+#include "PopUpUI.h"
 #include "InventoryUI.generated.h"
 
 class AItemBase;
@@ -12,7 +12,7 @@ class UInventorySlotUI;
 class UItemMenuUI;
 class UWidget;
 UCLASS()
-class FPS_API UInventoryUI : public UUserWidget, public IUIPopUpInterface
+class FPS_API UInventoryUI : public UUserWidget, public IPopUpUI
 {
 	GENERATED_BODY()
 

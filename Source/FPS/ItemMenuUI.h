@@ -4,14 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "UIPopUpInterface.h"
+#include "PopUpUI.h"
 #include "InventoryUI.h"
 #include "ItemMenuUI.generated.h"
 
 class UButton;
 
 UCLASS()
-class FPS_API UItemMenuUI : public UUserWidget, public IUIPopUpInterface
+class FPS_API UItemMenuUI : public UUserWidget, public IPopUpUI
 {
 	GENERATED_BODY()
 

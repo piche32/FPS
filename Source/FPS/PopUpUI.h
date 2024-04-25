@@ -4,11 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
-#include "UIPopUpInterface.generated.h"
+#include "PopUpUI.generated.h"
 
 // This class does not need to be modified.
 UINTERFACE(MinimalAPI)
-class UUIPopUpInterface : public UInterface
+class UPopUpUI : public UInterface
 {
 	GENERATED_BODY()
 };
@@ -16,7 +16,7 @@ class UUIPopUpInterface : public UInterface
 /**
  *
  */
-class FPS_API IUIPopUpInterface
+class FPS_API IPopUpUI
 {
 	GENERATED_BODY()
 
