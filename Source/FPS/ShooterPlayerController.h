@@ -33,6 +33,9 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = Input)
 	UInputAction *InventoryAction;
 
+	UPROPERTY(EditDefaultsOnly, Category = Input)
+	UInputAction *InteractAction;
+
 	bool bIsMovable = true;
 
 public:
@@ -46,14 +49,18 @@ public:
 	{
 		return HUD;
 	}
-	UInventoryManagerComponent *GetInventoryManager()
+
+	UFUNCTION(BlueprintPure)
+	UInventoryManagerComponent *GetInventoryManager() const
 	{
 		return InventoryManager;
 	}
 
-	bool GetIsMovable(){
+	bool GetIsMovable() const
+	{
 		return bIsMovable;
 	}
+
 private:
 	void Pickup(const FInputActionValue &InputActionValue);
 	void ToggleInventory(const FInputActionValue &InputActionValue);
@@ -66,6 +73,8 @@ private:
 
 	void SetFocusOnUI();
 	void SetFocusOnGameplay();
+
+	void Interact();
 
 protected:
 	UPROPERTY(EditAnywhere, Category = "UI")
@@ -80,4 +89,5 @@ public:
 	void PickupItem(class AItemBase *Item);
 	void DropItem(const int ItemIndex);
 	void UseItem(const int ItemIndex);
+	void UseItem(class AItemBase *Item);
 };

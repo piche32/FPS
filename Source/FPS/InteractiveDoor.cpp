@@ -40,7 +40,12 @@ void AInteractiveDoor::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-void AInteractiveDoor::OnOpen(UPrimitiveComponent *OverlappedComp, AActor *OtherActor, UPrimitiveComponent *OhterComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
+void AInteractiveDoor::OnOpen(UPrimitiveComponent *OverlappedComp, AActor *OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
+{
+	OnOpen(OtherActor);
+}
+
+void AInteractiveDoor::OnOpen(AActor *OtherActor)
 {
 	APawn *OtherPawn = Cast<APawn>(OtherActor);
 	if (!OtherPawn || !OtherPawn->IsPlayerControlled())
@@ -115,3 +120,4 @@ void AInteractiveDoor::Closing()
 		GetWorldTimerManager().ClearTimer(CloseTimer);
 	}
 }
+

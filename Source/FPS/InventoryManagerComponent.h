@@ -30,8 +30,14 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 
 	AItemBase *GetItem(const int ItemIndex);
+	UFUNCTION(BlueprintPure)
+	AItemBase *GetItem(const FText Value);
 	void AddItem(AItemBase *Item);
-	void RemoveItem(const int Index);
+
+	UFUNCTION(BlueprintCallable)
+	void RemoveItemByIndex(const int Index);
+	UFUNCTION(BlueprintCallable)
+	void RemoveItemByName(const FText Value);
 
 private:
 	UPROPERTY(VisibleAnywhere)

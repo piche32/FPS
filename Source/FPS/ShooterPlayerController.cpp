@@ -9,6 +9,7 @@
 #include "Components/InputComponent.h"
 #include "ItemBase.h"
 #include "Shooter.h"
+#include "InteractInterface.h"
 
 AShooterPlayerController::AShooterPlayerController()
 {
@@ -36,6 +37,7 @@ void AShooterPlayerController::SetupInputComponent()
         {
             Input->BindAction(PickupAction, ETriggerEvent::Triggered, this, &AShooterPlayerController::Pickup);
             Input->BindAction(InventoryAction, ETriggerEvent::Triggered, this, &AShooterPlayerController::ToggleInventory);
+            Input->BindAction(InteractAction, ETriggerEvent::Triggered, this, &AShooterPlayerController::Interact);
         }
     }
 }
@@ -105,6 +107,23 @@ void AShooterPlayerController::SetFocusOnGameplay()
     HUD->SetCrosshairVisible(true);
 }
 
+void AShooterPlayerController::Interact()
+{
+    TArray<AActor *> OverlappingActors;
+    GetPawn()->GetOverlappingActors(OverlappingActors);
+
+    for (AActor *OverlappingActor : OverlappingActors)
+    {
+        IInteractInterface *InteractObject = Cast<IInteractInterface>(OverlappingActor);
+        if (!InteractObject)
+        {
+            continue;
+        }
+
+        InteractObject->Interact(this);
+    }
+}
+
 void AShooterPlayerController::PickupItem(AItemBase *Item)
 {
     if (!InventoryManager)
@@ -135,7 +154,7 @@ void AShooterPlayerController::DropItem(const int ItemIndex)
         return;
     Item->Drop(Shooter->GetDropPosition());
 
-    InventoryManager->RemoveItem(ItemIndex);
+    InventoryManager->RemoveItemByIndex(ItemIndex);
 }
 
 void AShooterPlayerController::UseItem(const int ItemIndex)
@@ -150,6 +169,21 @@ void AShooterPlayerController::UseItem(const int ItemIndex)
     Item->Action();
     if (Item->IsConsumable())
     {
-        InventoryManager->RemoveItem(ItemIndex);
+        InventoryManager->RemoveItemByIndex(ItemIndex);
+    }
+}
+
+void AShooterPlayerController::UseItem(class AItemBase *Item)
+{
+    if (!InventoryManager)
+    {
+        return;
+    }
+    if (!Item)
+        return;
+    Item->Action();
+    if (Item->IsConsumable())
+    {
+        InventoryManager->RemoveItemByName(Item->GetName());
     }
 }

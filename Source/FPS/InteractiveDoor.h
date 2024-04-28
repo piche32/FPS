@@ -7,7 +7,6 @@
 #include "InteractiveDoor.generated.h"
 
 class UBoxComponent;
-
 UCLASS()
 class FPS_API AInteractiveDoor : public AActor
 {
@@ -46,11 +45,13 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Rotating")
 	float RotatingSpeed = 1.f;
 
+protected:
 	UFUNCTION()
-	void OnOpen(UPrimitiveComponent *OverlappedComp, AActor *OtherActor, UPrimitiveComponent *OhterComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
+	virtual void OnOpen(UPrimitiveComponent *OverlappedComp, AActor *OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
+	void OnOpen(AActor *OtherActor);
 
 	UFUNCTION()
-	void OnClose(UPrimitiveComponent *OverlappedComp, AActor *OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex);
+	virtual void OnClose(UPrimitiveComponent *OverlappedComp, AActor *OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex);
 
 	void Opening();
 	void Closing();

@@ -17,14 +17,39 @@ AItemBase *UInventoryManagerComponent::GetItem(const int ItemIndex)
 	return InventoryList[ItemIndex];
 }
 
+AItemBase *UInventoryManagerComponent::GetItem(const FText Value)
+{
+	for (int i = 0; i < InventoryList.Num(); i++)
+	{
+		if (InventoryList[i]->GetName().EqualTo(Value))
+		{
+			return InventoryList[i];
+		}
+	}
+	return nullptr;
+}
+
 void UInventoryManagerComponent::AddItem(AItemBase *Item)
 {
 	InventoryList.Add(Item);
 }
 
-void UInventoryManagerComponent::RemoveItem(const int Index)
+void UInventoryManagerComponent::RemoveItemByIndex(const int Index)
 {
 	InventoryList.RemoveAt(Index);
+}
+
+void UInventoryManagerComponent::RemoveItemByName(const FText Value)
+{
+
+	for (int i = 0; i < InventoryList.Num(); i++)
+	{
+		if (InventoryList[i]->GetName().EqualTo(Value))
+		{
+			RemoveItemByIndex(i);
+			return;
+		}
+	}
 }
 
 // Called when the game starts
