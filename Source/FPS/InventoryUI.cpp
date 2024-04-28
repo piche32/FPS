@@ -128,6 +128,7 @@ void UInventoryUI::Refresh()
 void UInventoryUI::Open()
 {
     SetVisible(Inventory, true);
+    Refresh();
 }
 
 void UInventoryUI::Close()
