@@ -99,7 +99,6 @@ void ALockedDoor::CollisionExit(UPrimitiveComponent *OverlappedComp, AActor *Oth
 
 void ALockedDoor::Interact(APlayerController *Controller)
 {
-    UE_LOG(LogTemp, Warning, TEXT("Interact with Locked Door."));
     if (!IsLocked)
     {
         return;

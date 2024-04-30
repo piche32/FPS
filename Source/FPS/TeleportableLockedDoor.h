@@ -3,50 +3,28 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "InteractiveDoor.h"
-#include "InteractInterface.h"
-#include "LockedDoor.generated.h"
+#include "LockedDoor.h"
+#include "TeleportableLockedDoor.generated.h"
 
-class UWidgetComponent;
-class UDisplayInfoUI;
-
+/**
+ *
+ */
 UCLASS()
-class FPS_API ALockedDoor : public AInteractiveDoor, public IInteractInterface
+class FPS_API ATeleportableLockedDoor : public ALockedDoor
 {
 	GENERATED_BODY()
-
 public:
-	ALockedDoor();
+	UPROPERTY(EditAnywhere, Category = "Info", meta = (MakeEditWidget = true))
+	FTransform TeleportTransform;
 
 protected:
-	UPROPERTY(EditAnywhere, Category = "Info")
-	bool IsLocked = true;
-
-	UPROPERTY(VisibleAnywhere, Category = "UI")
-	UWidgetComponent *Widget;
-
-	bool IsInRange = false;
-private:
-
-	UPROPERTY(EditAnywhere, Category = "UI")
-	TSubclassOf<UDisplayInfoUI> UDisplayInfoUIClass;
-
-	UPROPERTY(EditAnywhere, Category = "Info")
-	FText ActionText = FText::FromString(TEXT("F : 열기"));
-
-protected:
-	virtual void BeginPlay() override;
-
 	virtual void Interact(APlayerController *Controller) override;
 	virtual void OnOpen(UPrimitiveComponent *OverlappedComp, AActor *OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult) override;
 	virtual void OnClose(UPrimitiveComponent *OverlappedComp, AActor *OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex) override;
-
-	UFUNCTION()
 	virtual void CollisionEnter(UPrimitiveComponent *OverlappedComp, AActor *OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult);
-	UFUNCTION()
 	virtual void CollisionExit(UPrimitiveComponent *OverlappedComp, AActor *OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex);
 
 private:
-	void InitializeWidget();
-	void InitializeCollision();
+	void Teleport(APlayerController *Controller);
+	void Teleport(APawn *Target);
 };
