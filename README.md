@@ -13,3 +13,7 @@
 
 1. 따로 전달 받은 링크에서 'Assets' 폴더 다운
 2. 다운받은 'Assets' 폴더를 Content 폴더 안에 추가
+
+##출처
+3D Model
+- 서류: https://sketchfab.com/3d-models/top-secret-paper-stack-541db3173f32485ea8fe89168445999f
