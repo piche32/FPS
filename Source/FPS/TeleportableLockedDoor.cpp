@@ -12,15 +12,11 @@ void ATeleportableLockedDoor::Interact(APlayerController *Controller)
         Teleport(Controller);
         return;
     }
-    if (AShooterPlayerController *ShooterPlayerController = Cast<AShooterPlayerController>(Controller))
+
+    Unlock(Controller);
+    if (!IsLocked)
     {
-        if (AItemBase *Key = ShooterPlayerController->GetInventoryManager()->GetItem(FText::FromString("Key")))
-        {
-            IsLocked = false;
-            ShooterPlayerController->UseItem(Key);
-            Widget->SetVisibility(false);
-            Teleport(Controller);
-        }
+        Teleport(Controller);
     }
 }
 

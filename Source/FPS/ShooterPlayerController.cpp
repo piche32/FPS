@@ -187,3 +187,8 @@ void AShooterPlayerController::UseItem(class AItemBase *Item)
         InventoryManager->RemoveItemByName(Item->GetName());
     }
 }
+
+void AShooterPlayerController::SetInfoText(FText Value)
+{
+    HUD->SetInfoText(Value);
+}

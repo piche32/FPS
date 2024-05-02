@@ -25,32 +25,6 @@ void ALockedDoor::BeginPlay()
     InitializeCollision();
 }
 
-void ALockedDoor::InitializeWidget()
-{
-    if (UDisplayInfoUIClass && Widget)
-    {
-        Widget->SetWidgetSpace(EWidgetSpace::Screen);
-        Widget->SetWidgetClass(UDisplayInfoUIClass);
-        Widget->InitWidget();
-        Widget->SetVisibility(false);
-    }
-
-    if (UDisplayInfoUI *DisplayInfoUI = Cast<UDisplayInfoUI>(Widget->GetWidget()))
-    {
-        DisplayInfoUI->SetAction(ActionText);
-    }
-}
-
-void ALockedDoor::InitializeCollision()
-{
-
-    if (Collision)
-    {
-        Collision->OnComponentBeginOverlap.AddDynamic(this, &ALockedDoor::CollisionEnter);
-        Collision->OnComponentEndOverlap.AddDynamic(this, &ALockedDoor::CollisionExit);
-    }
-}
-
 void ALockedDoor::OnOpen(UPrimitiveComponent *OverlappedComp, AActor *OtherActor, UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
 {
     if (!IsLocked)
@@ -104,6 +78,11 @@ void ALockedDoor::Interact(APlayerController *Controller)
         return;
     }
 
+    Unlock(Controller);
+}
+
+void ALockedDoor::Unlock(APlayerController *Controller)
+{
     if (AShooterPlayerController *ShooterPlayerController = Cast<AShooterPlayerController>(Controller))
     {
         if (AItemBase *Key = ShooterPlayerController->GetInventoryManager()->GetItem(FText::FromString("Key")))
@@ -113,5 +92,35 @@ void ALockedDoor::Interact(APlayerController *Controller)
             Widget->SetVisibility(false);
             AInteractiveDoor::OnOpen(ShooterPlayerController->GetPawn());
         }
+        else
+        {
+            ShooterPlayerController->SetInfoText(LockedMessage);
+        }
+    }
+}
+
+void ALockedDoor::InitializeWidget()
+{
+    if (UDisplayInfoUIClass && Widget)
+    {
+        Widget->SetWidgetSpace(EWidgetSpace::Screen);
+        Widget->SetWidgetClass(UDisplayInfoUIClass);
+        Widget->InitWidget();
+        Widget->SetVisibility(false);
+    }
+
+    if (UDisplayInfoUI *DisplayInfoUI = Cast<UDisplayInfoUI>(Widget->GetWidget()))
+    {
+        DisplayInfoUI->SetAction(ActionText);
+    }
+}
+
+void ALockedDoor::InitializeCollision()
+{
+
+    if (Collision)
+    {
+        Collision->OnComponentBeginOverlap.AddDynamic(this, &ALockedDoor::CollisionEnter);
+        Collision->OnComponentEndOverlap.AddDynamic(this, &ALockedDoor::CollisionExit);
     }
 }

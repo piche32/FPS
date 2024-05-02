@@ -90,4 +90,6 @@ public:
 	void DropItem(const int ItemIndex);
 	void UseItem(const int ItemIndex);
 	void UseItem(class AItemBase *Item);
+
+	void SetInfoText(FText Value);
 };

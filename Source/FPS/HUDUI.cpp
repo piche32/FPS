@@ -2,6 +2,7 @@
 
 #include "HUDUI.h"
 #include "InventoryUI.h"
+#include "Components/TextBlock.h"
 
 void UHUDUI::RefreshInventoryWidget()
 {
@@ -31,6 +32,23 @@ void UHUDUI::SetCrosshairVisible(bool Value)
     }
     else
     {
+
         CrosshairUI->SetVisibility(ESlateVisibility::Hidden);
     }
+}
+
+void UHUDUI::SetInfoText(FText Value)
+{
+    InfoText->SetText(Value);
+    InfoText->SetVisibility(ESlateVisibility::Visible);
+    GetWorld()->GetTimerManager().SetTimer(
+        InfoTextVisibleTimer,
+        this,
+        &UHUDUI::CloseInfoText,
+        InfoTextVisibleTime, false);
+}
+
+void UHUDUI::CloseInfoText()
+{
+    InfoText->SetVisibility(ESlateVisibility::Hidden);
 }
