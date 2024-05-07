@@ -12,6 +12,7 @@ class UPickupTextUI;
 class UWidgetComponent;
 
 UCLASS()
+
 class FPS_API AItemBase : public AActor
 {
 	GENERATED_BODY()
@@ -25,7 +26,6 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Info")
 	FText ActionText = FText::FromString(TEXT("Use"));
-
 
 	UPROPERTY(EditAnywhere, Category = "Info")
 	UTexture2D *Thumbnail;
@@ -48,11 +48,12 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Item")
 	USphereComponent *Collision;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Info")
 	bool bConsumable = true;
 
 	UPROPERTY(EditAnywhere, Category = "Info")
 	FText DetailText = FText::FromString(TEXT(""));
-	
+
 public:
 	// Sets default values for this actor's properties
 	AItemBase();
@@ -111,6 +112,7 @@ public:
 private:
 	void InitializeCollision();
 	void InitializeWidget();
+	void InitializeMesh();
 
 	virtual void Pickup(class AShooterPlayerController *Controller);
 };

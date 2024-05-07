@@ -18,14 +18,14 @@ AItemBase::AItemBase()
 
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 
-	Collision = CreateDefaultSubobject<USphereComponent>(TEXT("Collision"));
-	Collision->SetupAttachment(RootComponent);
-
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	Mesh->SetupAttachment(RootComponent);
 
+	Collision = CreateDefaultSubobject<USphereComponent>(TEXT("Collision"));
+	Collision->SetupAttachment(Mesh);
+
 	Widget = CreateDefaultSubobject<UWidgetComponent>(TEXT("Widget"));
-	Widget->SetupAttachment(RootComponent);
+	Widget->SetupAttachment(Mesh);
 }
 
 // Called when the game starts or when spawned
@@ -35,6 +35,7 @@ void AItemBase::BeginPlay()
 
 	InitializeCollision();
 	InitializeWidget();
+	InitializeMesh();
 
 	AShooterPlayerController *PlayerController = Cast<AShooterPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 	if (PlayerController)
@@ -71,6 +72,11 @@ void AItemBase::InitializeWidget()
 	}
 }
 
+void AItemBase::InitializeMesh()
+{
+	Mesh->SetSimulatePhysics(true);
+}
+
 // Called every frame
 void AItemBase::Tick(float DeltaTime)
 {
@@ -86,6 +92,7 @@ void AItemBase::Pickup(AShooterPlayerController *Controller)
 
 	SetActorHiddenInGame(true);
 	SetActorEnableCollision(false);
+	Mesh->SetSimulatePhysics(false); 
 }
 
 void AItemBase::ReadyToPickup(UPrimitiveComponent *OverlappedComp, AActor *OtherActor, UPrimitiveComponent *OhterComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
@@ -104,8 +111,8 @@ void AItemBase::PreventToPickup(UPrimitiveComponent *OverlappedComp, AActor *Oth
 	AShooter *Shooter = Cast<AShooter>(OtherActor);
 	if (Shooter && Cast<AShooterPlayerController>(Shooter->GetController()))
 	{
-	Widget->SetVisibility(false);
-	IsInRange = false;
+		Widget->SetVisibility(false);
+		IsInRange = false;
 	}
 }
 
@@ -116,7 +123,9 @@ void AItemBase::Action()
 
 void AItemBase::Drop(FVector DropLocation)
 {
+	UE_LOG(LogTemp, Warning, TEXT("DropLocation: %s"), *DropLocation.ToString());
 	SetActorLocation(DropLocation);
 	SetActorHiddenInGame(false);
 	SetActorEnableCollision(true);
+	Mesh->SetSimulatePhysics(false);
 }
