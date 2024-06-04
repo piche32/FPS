@@ -42,7 +42,7 @@ private:
 	bool IsInRange = false;
 
 protected:
-	UPROPERTY(VisibleAnywhere, Category = "Item")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Item")
 	UStaticMeshComponent *Mesh;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Item")

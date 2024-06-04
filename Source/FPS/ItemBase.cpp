@@ -16,10 +16,8 @@ AItemBase::AItemBase()
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
-
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
-	Mesh->SetupAttachment(RootComponent);
+	RootComponent = Mesh;
 
 	Collision = CreateDefaultSubobject<USphereComponent>(TEXT("Collision"));
 	Collision->SetupAttachment(Mesh);
@@ -92,7 +90,7 @@ void AItemBase::Pickup(AShooterPlayerController *Controller)
 
 	SetActorHiddenInGame(true);
 	SetActorEnableCollision(false);
-	Mesh->SetSimulatePhysics(false); 
+	Mesh->SetSimulatePhysics(false);
 }
 
 void AItemBase::ReadyToPickup(UPrimitiveComponent *OverlappedComp, AActor *OtherActor, UPrimitiveComponent *OhterComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
@@ -123,9 +121,12 @@ void AItemBase::Action()
 
 void AItemBase::Drop(FVector DropLocation)
 {
-	UE_LOG(LogTemp, Warning, TEXT("DropLocation: %s"), *DropLocation.ToString());
-	SetActorLocation(DropLocation);
+	bool bSuccess = SetActorLocation(DropLocation, false, nullptr, ETeleportType::TeleportPhysics);
+	if (bSuccess)
+		UE_LOG(LogTemp, Warning, TEXT("Success"));
+	if (!bSuccess)
+		UE_LOG(LogTemp, Warning, TEXT("Fail"));
 	SetActorHiddenInGame(false);
 	SetActorEnableCollision(true);
-	Mesh->SetSimulatePhysics(false);
+	Mesh->SetSimulatePhysics(true);
 }
