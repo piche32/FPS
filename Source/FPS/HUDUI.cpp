@@ -52,3 +52,8 @@ void UHUDUI::CloseInfoText()
 {
     InfoText->SetVisibility(ESlateVisibility::Hidden);
 }
+
+void UHUDUI::Hide()
+{
+    SetVisibility(ESlateVisibility::Hidden);
+}

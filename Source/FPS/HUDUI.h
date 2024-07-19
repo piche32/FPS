@@ -27,7 +27,6 @@ protected:
 	float InfoTextVisibleTime = 5.0f;
 
 private:
-	bool bIsCrosshairVisible = true;
 
 	FTimerHandle InfoTextVisibleTimer;
 
@@ -39,4 +38,5 @@ public:
 	void SetCrosshairVisible(bool Value);
 	void SetInfoText(FText Value);
 	void CloseInfoText();
+	void Hide();
 };

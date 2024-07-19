@@ -20,7 +20,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
 	TSubclassOf<UHUDUI> HUDClass;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
+	UPROPERTY(BlueprintReadOnly, Category = "UI")
 	UHUDUI *HUD;
 
 private:
@@ -73,6 +73,9 @@ private:
 
 	void SetFocusOnUI();
 	void SetFocusOnGameplay();
+
+	UFUNCTION(BlueprintCallable, Category = "UI")
+	void HideHUD();
 
 	void Interact();
 

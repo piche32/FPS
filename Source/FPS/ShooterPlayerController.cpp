@@ -107,6 +107,11 @@ void AShooterPlayerController::SetFocusOnGameplay()
     HUD->SetCrosshairVisible(true);
 }
 
+void AShooterPlayerController::HideHUD()
+{
+    HUD->Hide();
+}
+
 void AShooterPlayerController::Interact()
 {
     TArray<AActor *> OverlappingActors;
