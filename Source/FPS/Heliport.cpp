@@ -8,6 +8,8 @@
 #include "ShooterPlayerController.h"
 #include "InventoryManagerComponent.h"
 #include "ItemBase.h"
+#include "MainLevelScriptActor.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AHeliport::AHeliport()
@@ -41,7 +43,11 @@ void AHeliport::Interact(APlayerController *Controller)
 		{
 			ShooterPlayerController->UseItem(Document);
 			Widget->SetVisibility(false);
-			ShooterPlayerController->SetInfoText(FText::FromString(TEXT("임무 완수!")));
+
+			if (AMainLevelScriptActor *Main = Cast<AMainLevelScriptActor>(UGameplayStatics::GetActorOfClass(GetWorld(), AMainLevelScriptActor::StaticClass())))
+			{
+				Main->PlayEndingSequence();
+			}
 		}
 		else
 		{
