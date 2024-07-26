@@ -59,17 +59,18 @@ float ADog::TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEven
 	if (HealthComponent)
 	{
 		HealthComponent->DamageTaken(DamageAmount);
-	}
 
-	if (HealthComponent->IsDead())
-	{
-		DetachFromControllerPendingDestroy();
-	}
+		if (HealthComponent->IsDead())
+		{
+			DetachFromControllerPendingDestroy();
+		}
 
-	else
-	{
-		IsHit = true;
-	}
+		else
+		{
+			IsHit = true;
+		}
+
+	}		
 
 	return DamageAmount;
 }

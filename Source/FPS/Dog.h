@@ -45,6 +45,11 @@ public:
 
 	void UpdateWalkSpeed(float Speed);
 
+	UFUNCTION(BlueprintCallable)
+	UHealthComponent *GetHealthComponent()
+	{
+		return HealthComponent;
+	}
 private:
 	UPROPERTY(VisibleAnywhere)
 	UHealthComponent *HealthComponent;
