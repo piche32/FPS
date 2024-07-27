@@ -134,6 +134,10 @@ float AShooter::TakeDamage(float DamageAmount, struct FDamageEvent const &Damage
 	if (HealthComponent)
 	{
 		HealthComponent->DamageTaken(DamageAmount);
+
+		if(HealthComponent->IsDead()){
+			DetachFromControllerPendingDestroy();
+		}
 	}
 
 	return DamageAmount;

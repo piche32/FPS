@@ -70,7 +70,10 @@ public:
 	void OnShoot();
 
 	FVector GetDropPosition();
-	UHealthComponent *GetHealthComponent(){
+
+	UFUNCTION(BlueprintCallable)
+	UHealthComponent *GetHealthComponent()
+	{
 		return HealthComponent;
 	}
 
