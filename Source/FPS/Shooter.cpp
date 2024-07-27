@@ -10,6 +10,8 @@
 #include "Gun.h"
 #include "Components/SceneComponent.h"
 #include "ShooterPlayerController.h"
+#include "MainLevelScriptActor.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AShooter::AShooter()
@@ -135,8 +137,16 @@ float AShooter::TakeDamage(float DamageAmount, struct FDamageEvent const &Damage
 	{
 		HealthComponent->DamageTaken(DamageAmount);
 
-		if(HealthComponent->IsDead()){
+		if (HealthComponent->IsDead())
+		{
 			DetachFromControllerPendingDestroy();
+			if (PlayerController)
+			{
+				if (AMainLevelScriptActor *Main = Cast<AMainLevelScriptActor>(UGameplayStatics::GetActorOfClass(GetWorld(), AMainLevelScriptActor::StaticClass())))
+				{
+					Main->PlayGameOverSequence();
+				}
+			}
 		}
 	}
 

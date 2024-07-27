@@ -17,11 +17,16 @@ class FPS_API AMainLevelScriptActor : public ALevelScriptActor
 
 private:
 	UPROPERTY()
-	class ALevelSequenceActor *SequenceActor;
+	class ALevelSequenceActor *EndingSequenceActor;
+	class ALevelSequenceActor *GameOverSequenceActor;
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sequence")
 	class ULevelSequence *EndingSequence;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sequence")
+	class ULevelSequence *GameOverSequence;
+
 	void PlayEndingSequence();
+	void PlayGameOverSequence();
 };

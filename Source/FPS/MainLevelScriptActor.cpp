@@ -9,17 +9,33 @@ void AMainLevelScriptActor::PlayEndingSequence()
 {
     if (EndingSequence)
     {
+        FMovieSceneSequencePlaybackSettings PlaybackSettings;
+        PlaybackSettings.bDisableLookAtInput = true;
+        PlaybackSettings.bDisableMovementInput = true;
+        PlaybackSettings.bHideHud = true;
+        ULevelSequencePlayer::CreateLevelSequencePlayer(GetWorld(), EndingSequence, PlaybackSettings, EndingSequenceActor);
 
-        if (!SequenceActor)
+        if (EndingSequenceActor)
         {
-            FMovieSceneSequencePlaybackSettings PlaybackSettings;
-            ULevelSequencePlayer::CreateLevelSequencePlayer(GetWorld(), EndingSequence, PlaybackSettings, SequenceActor);
+            EndingSequenceActor->AddBindingByTag(FName(TEXT("Player")), UGameplayStatics::GetPlayerPawn(GetWorld(), 0), false);
+            EndingSequenceActor->SequencePlayer->Play();
         }
+    }
+}
 
-        if (SequenceActor)
+void AMainLevelScriptActor::PlayGameOverSequence()
+{
+    if (GameOverSequence)
+    {
+        FMovieSceneSequencePlaybackSettings PlaybackSettings;
+        PlaybackSettings.bDisableLookAtInput = true;
+        PlaybackSettings.bDisableMovementInput = true;
+        PlaybackSettings.bHideHud = true;
+        ULevelSequencePlayer::CreateLevelSequencePlayer(GetWorld(), GameOverSequence, PlaybackSettings, GameOverSequenceActor);
+
+        if (GameOverSequenceActor)
         {
-            SequenceActor->AddBindingByTag(FName(TEXT("Player")), UGameplayStatics::GetPlayerPawn(GetWorld(), 0), false);
-            SequenceActor->SequencePlayer->Play();
+            GameOverSequenceActor->SequencePlayer->Play();
         }
     }
 }
