@@ -3,7 +3,7 @@
 #include "CCTV.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/SphereComponent.h"
-#include "HealthComponent.h"
+#include "../Components/HealthComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Math/Color.h"
 #include "NiagaraComponent.h"

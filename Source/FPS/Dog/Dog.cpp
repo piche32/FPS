@@ -4,7 +4,7 @@
 // #include "Components/SkeletalMeshComponent.h"
 #include "GameFramework/DamageType.h"
 #include "Kismet/GameplayStatics.h"
-#include "HealthComponent.h"
+#include "../Components/HealthComponent.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 

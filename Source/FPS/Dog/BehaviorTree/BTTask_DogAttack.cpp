@@ -1,15 +1,15 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "BTTask_UpdateWalkSpeed.h"
-#include "Dog.h"
+#include "BTTask_DogAttack.h"
+#include "../Dog.h"
 #include "AIController.h"
 
-UBTTask_UpdateWalkSpeed::UBTTask_UpdateWalkSpeed()
+UBTTask_DogAttack::UBTTask_DogAttack()
 {
-    NodeName = TEXT("Update Walk Speed");
+    NodeName = TEXT("Dog Attack");
 }
 
-EBTNodeResult::Type UBTTask_UpdateWalkSpeed::ExecuteTask(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory)
+EBTNodeResult::Type UBTTask_DogAttack::ExecuteTask(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory)
 {
     Super::ExecuteTask(OwnerComp, NodeMemory);
 
@@ -20,7 +20,6 @@ EBTNodeResult::Type UBTTask_UpdateWalkSpeed::ExecuteTask(UBehaviorTreeComponent 
         return EBTNodeResult::Failed;
     }
 
-    Dog->UpdateWalkSpeed(Speed);
-
+    Dog->StartAttacked();
     return EBTNodeResult::Succeeded;
 }

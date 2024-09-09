@@ -2,7 +2,7 @@
 
 #include "TeleportableLockedDoor.h"
 #include "Components/WidgetComponent.h"
-#include "ShooterPlayerController.h"
+#include "../Shooter/ShooterPlayerController.h"
 #include "ItemBase.h"
 
 void ATeleportableLockedDoor::Interact(APlayerController *Controller)

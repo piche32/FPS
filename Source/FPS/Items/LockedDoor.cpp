@@ -3,9 +3,9 @@
 #include "LockedDoor.h"
 #include "Components/WidgetComponent.h"
 #include "Components/BoxComponent.h"
-#include "DisplayInfoUI.h"
-#include "ShooterPlayerController.h"
-#include "InventoryManagerComponent.h"
+#include "../UI/DisplayInfoUI.h"
+#include "../Shooter/ShooterPlayerController.h"
+#include "../Components/InventoryManagerComponent.h"
 #include "ItemBase.h"
 #include "InteractiveDoor.h"
 

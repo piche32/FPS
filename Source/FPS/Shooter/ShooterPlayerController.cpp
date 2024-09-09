@@ -1,15 +1,15 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "ShooterPlayerController.h"
-#include "InventoryManagerComponent.h"
+#include "../Components/InventoryManagerComponent.h"
 #include "Blueprint/UserWidget.h"
-#include "HUDUI.h"
+#include "../UI/HUDUI.h"
 #include "InputActionValue.h"
 #include "EnhancedInputComponent.h"
 #include "Components/InputComponent.h"
-#include "ItemBase.h"
+#include "../Items/ItemBase.h"
 #include "Shooter.h"
-#include "InteractInterface.h"
+#include "../Items/InteractInterface.h"
 
 AShooterPlayerController::AShooterPlayerController()
 {

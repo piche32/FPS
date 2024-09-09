@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BTTask_CCTVAttack.h"
-#include "CCTV.h"
+#include "../CCTV.h"
 #include "AIController.h"
 #include "Kismet/GameplayStatics.h"
 

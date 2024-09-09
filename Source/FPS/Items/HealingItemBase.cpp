@@ -2,8 +2,8 @@
 
 #include "HealingItemBase.h"
 #include "Kismet/GameplayStatics.h"
-#include "Shooter.h"
-#include "HealthComponent.h"
+#include "../Shooter/Shooter.h"
+#include "../Components/HealthComponent.h"
 
 #define LOCTEXT_NAMESPACE "UINamespace"
 void AHealingItemBase::Action()

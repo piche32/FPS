@@ -4,11 +4,11 @@
 #include "Components/StaticMeshComponent.h"
 #include "Components/BoxComponent.h"
 #include "Components/WidgetComponent.h"
-#include "DisplayInfoUI.h"
-#include "ShooterPlayerController.h"
-#include "InventoryManagerComponent.h"
+#include "../UI/DisplayInfoUI.h"
+#include "../Shooter/ShooterPlayerController.h"
+#include "../Components/InventoryManagerComponent.h"
 #include "ItemBase.h"
-#include "MainLevelScriptActor.h"
+#include "../Levels/MainLevelScriptActor.h"
 #include "Kismet/GameplayStatics.h"
 
 // Sets default values

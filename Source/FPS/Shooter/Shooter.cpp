@@ -6,11 +6,11 @@
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
 #include "Components/InputComponent.h"
-#include "HealthComponent.h"
+#include "../Components/HealthComponent.h"
 #include "Gun.h"
 #include "Components/SceneComponent.h"
 #include "ShooterPlayerController.h"
-#include "MainLevelScriptActor.h"
+#include "../Levels/MainLevelScriptActor.h"
 #include "Kismet/GameplayStatics.h"
 
 // Sets default values
@@ -129,7 +129,8 @@ void AShooter::Shoot(const FInputActionValue &InputActionValue)
 	OnShoot();
 }
 
-float AShooter::TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, AController *EventInstigator, AActor *DamageCauser)
+float AShooter::TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent,
+ AController *EventInstigator, AActor *DamageCauser)
 {
 	Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 
@@ -142,7 +143,10 @@ float AShooter::TakeDamage(float DamageAmount, struct FDamageEvent const &Damage
 			DetachFromControllerPendingDestroy();
 			if (PlayerController)
 			{
-				if (AMainLevelScriptActor *Main = Cast<AMainLevelScriptActor>(UGameplayStatics::GetActorOfClass(GetWorld(), AMainLevelScriptActor::StaticClass())))
+				if (AMainLevelScriptActor *Main = 
+				Cast<AMainLevelScriptActor>(UGameplayStatics::GetActorOfClass(
+					GetWorld(),
+					AMainLevelScriptActor::StaticClass())))
 				{
 					Main->PlayGameOverSequence();
 				}

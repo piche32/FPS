@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
-#include "InventoryManagerComponent.h"
+#include "../Components/InventoryManagerComponent.h"
 #include "ShooterPlayerController.generated.h"
 
 class UHUDUI;
@@ -36,6 +36,7 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = Input)
 	UInputAction *InteractAction;
 
+	// 플레이어 움직일 수 있는지 여부
 	bool bIsMovable = true;
 
 public:

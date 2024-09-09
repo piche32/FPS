@@ -3,12 +3,12 @@
 #include "ItemBase.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/SphereComponent.h"
-#include "PickupTextUI.h"
+#include "../UI/PickupTextUI.h"
 #include "Blueprint/UserWidget.h"
 #include "Kismet/GameplayStatics.h"
 #include "Components/WidgetComponent.h"
-#include "ShooterPlayerController.h"
-#include "Shooter.h"
+#include "../Shooter/ShooterPlayerController.h"
+#include "../Shooter/Shooter.h"
 
 // Sets default values
 AItemBase::AItemBase()

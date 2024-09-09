@@ -2,15 +2,14 @@
 
 #include "InventoryUI.h"
 #include "InventorySlotUI.h"
-#include "ItemBase.h"
+#include "../Items/ItemBase.h"
 #include "Components/SlateWrapperTypes.h"
 #include "Components/Button.h"
-#include "InventoryManagerComponent.h"
-#include "ShooterPlayerController.h"
+#include "../Components/InventoryManagerComponent.h"
+#include "../Shooter/ShooterPlayerController.h"
 #include "Components/Widget.h"
 #include "Kismet/GameplayStatics.h"
 #include "ItemMenuUI.h"
-#include "InventoryManagerComponent.h"
 
 void UInventoryUI::NativeConstruct()
 {
