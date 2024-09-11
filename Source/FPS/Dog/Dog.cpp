@@ -69,8 +69,7 @@ float ADog::TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEven
 		{
 			IsHit = true;
 		}
-
-	}		
+	}
 
 	return DamageAmount;
 }
@@ -98,7 +97,7 @@ void ADog::OnAttack(UPrimitiveComponent *OverlappedComp, AActor *OtherActor, UPr
 
 void ADog::StartAttacked()
 {
-	HasAttacked = true;
+	TriggerToAttack = true;
 }
 
 void ADog::UpdateWalkSpeed(float Speed)
@@ -106,9 +105,9 @@ void ADog::UpdateWalkSpeed(float Speed)
 	GetCharacterMovement()->MaxWalkSpeed = Speed;
 }
 
-void ADog::FinishAttacked()
+void ADog::SetOffHasAttacked()
 {
-	HasAttacked = false;
+	TriggerToAttack = false;
 }
 
 void ADog::SetOffIsHit()
