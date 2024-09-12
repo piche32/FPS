@@ -60,6 +60,8 @@ private:
 
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, AController *EventInstigator, AActor *DamageCauser) override;
 
+	void Die();
+
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
 	float Damage = 10.f;
 
