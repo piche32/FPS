@@ -26,13 +26,13 @@ protected:
 	bool IsHit;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Combat")
-	bool HasAttacked = false;
+	bool TriggerToAttack = false;
 
 	UFUNCTION(BlueprintCallable)
 	void SetOffIsHit();
 
 	UFUNCTION(BlueprintCallable)
-	void FinishAttacked();
+	void SetOffHasAttacked();
 
 public:
 	// Called every frame
@@ -50,6 +50,7 @@ public:
 	{
 		return HealthComponent;
 	}
+
 private:
 	UPROPERTY(VisibleAnywhere)
 	UHealthComponent *HealthComponent;
@@ -58,6 +59,8 @@ private:
 	USphereComponent *MouseCollision;
 
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, AController *EventInstigator, AActor *DamageCauser) override;
+
+	void Die();
 
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
 	float Damage = 10.f;

@@ -7,6 +7,7 @@
 #include "../Components/HealthComponent.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Components/CapsuleComponent.h"
 
 // Sets default values
 ADog::ADog()
@@ -62,17 +63,25 @@ float ADog::TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEven
 
 		if (HealthComponent->IsDead())
 		{
-			DetachFromControllerPendingDestroy();
+			Die();
 		}
 
 		else
 		{
 			IsHit = true;
 		}
-
-	}		
+	}
 
 	return DamageAmount;
+}
+
+void ADog::Die()
+{
+	if (UCapsuleComponent *CapsuleComp = GetCapsuleComponent())
+	{
+		CapsuleComp->SetCollisionProfileName(TEXT("OverlapAll"));
+	}
+	DetachFromControllerPendingDestroy();
 }
 
 void ADog::OnAttack(UPrimitiveComponent *OverlappedComp, AActor *OtherActor, UPrimitiveComponent *OhterComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult &SweepResult)
@@ -98,7 +107,7 @@ void ADog::OnAttack(UPrimitiveComponent *OverlappedComp, AActor *OtherActor, UPr
 
 void ADog::StartAttacked()
 {
-	HasAttacked = true;
+	TriggerToAttack = true;
 }
 
 void ADog::UpdateWalkSpeed(float Speed)
@@ -106,9 +115,9 @@ void ADog::UpdateWalkSpeed(float Speed)
 	GetCharacterMovement()->MaxWalkSpeed = Speed;
 }
 
-void ADog::FinishAttacked()
+void ADog::SetOffHasAttacked()
 {
-	HasAttacked = false;
+	TriggerToAttack = false;
 }
 
 void ADog::SetOffIsHit()
