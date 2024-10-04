@@ -82,4 +82,5 @@ private:
 	void Look(const FInputActionValue &InputActionValue);
 	void Shoot(const FInputActionValue &InputActionValue);
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, AController *EventInstigator, AActor *DamageCauser) override;
+	void Die();
 };

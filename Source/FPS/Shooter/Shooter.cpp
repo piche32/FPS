@@ -6,13 +6,14 @@
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
 #include "Components/InputComponent.h"
-#include "../Components/HealthComponent.h"
-#include "Gun.h"
 #include "Components/SceneComponent.h"
-#include "ShooterPlayerController.h"
-#include "../Levels/MainLevelScriptActor.h"
 #include "Kismet/GameplayStatics.h"
+#include "Components/CapsuleComponent.h"
 
+#include "ShooterPlayerController.h"
+#include "Gun.h"
+#include "../Components/HealthComponent.h"
+#include "../Levels/MainLevelScriptActor.h"
 // Sets default values
 AShooter::AShooter()
 {
@@ -142,19 +143,30 @@ float AShooter::TakeDamage(float DamageAmount, struct FDamageEvent const &Damage
 
 		if (HealthComponent->IsDead())
 		{
-			DetachFromControllerPendingDestroy();
-			if (PlayerController)
-			{
-				if (AMainLevelScriptActor *Main =
-						Cast<AMainLevelScriptActor>(UGameplayStatics::GetActorOfClass(
-							GetWorld(),
-							AMainLevelScriptActor::StaticClass())))
-				{
-					Main->PlayGameOverSequence();
-				}
-			}
+			Die();
 		}
 	}
 
 	return DamageAmount;
+}
+
+void AShooter::Die()
+{
+	if (UCapsuleComponent *CapsuleComp = GetCapsuleComponent())
+	{
+		CapsuleComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	}
+
+	DetachFromControllerPendingDestroy();
+
+	if (PlayerController)
+	{
+		if (AMainLevelScriptActor *Main =
+				Cast<AMainLevelScriptActor>(UGameplayStatics::GetActorOfClass(
+					GetWorld(),
+					AMainLevelScriptActor::StaticClass())))
+		{
+			Main->PlayGameOverSequence();
+		}
+	}
 }
