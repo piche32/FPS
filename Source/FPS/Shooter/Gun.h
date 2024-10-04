@@ -52,6 +52,10 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float BulletStrength = 1000.f;
 
-	
 	void Shoot();
+
+	UPROPERTY(EditDefaultsOnly, Category = "Destruction")
+	TSubclassOf<class AFieldSystemActor> MasterFieldClass;
+
+	void SpawnMasterField(FVector Location, FRotator Rotation);
 };

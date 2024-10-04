@@ -8,7 +8,9 @@ public class FPS : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "Niagara", "GameplayTasks", "AIModule", "NavigationSystem", "UMG", "MovieScene", "LevelSequence" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore",
+		 "EnhancedInput", "Niagara", "GameplayTasks", "AIModule", "NavigationSystem",
+		  "UMG", "MovieScene", "LevelSequence", "FieldSystemEngine","GeometryCollectionEngine" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] { });
 

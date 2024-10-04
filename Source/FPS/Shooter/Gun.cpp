@@ -5,7 +5,8 @@
 #include "NiagaraFunctionLibrary.h"
 #include "GameFramework/DamageType.h"
 #include "Kismet/GameplayStatics.h"
-
+#include "Field/FieldSystemActor.h"
+#include "GeometryCollection/GeometryCollectionComponent.h"
 // Sets default values
 AGun::AGun()
 {
@@ -75,11 +76,28 @@ void AGun::Shoot()
 		{
 			auto DamageTypeClass = UDamageType::StaticClass();
 			UGameplayStatics::ApplyDamage(HitActor, Damage, OwnerController, this, DamageTypeClass);
-			UPrimitiveComponent *Component = HitResult.GetComponent();
-			if (Component)
+
+			if (Cast<UGeometryCollectionComponent>(HitResult.GetComponent()) != nullptr)
 			{
-				Component->AddRadialImpulse(HitResult.Location, BulletRadius, BulletStrength, ERadialImpulseFalloff::RIF_Constant);
+				SpawnMasterField(HitResult.Location, Rotation);
 			}
 		}
+	}
+}
+
+void AGun::SpawnMasterField(FVector Location, FRotator Rotation)
+{
+	UWorld *World = GetWorld();
+	if (World == nullptr)
+		return;
+
+	if (MasterFieldClass)
+	{
+		Rotation.Pitch -= 90.0f; // MasterField 방향 벡터 보정
+		AFieldSystemActor *MasterField = World->SpawnActor<AFieldSystemActor>(MasterFieldClass, Location, Rotation);
+		if (MasterField == nullptr)
+			return;
+
+		MasterField->SetLifeSpan(3.0f);
 	}
 }
