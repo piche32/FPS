@@ -130,8 +130,10 @@ void AShooter::Shoot(const FInputActionValue &InputActionValue)
 }
 
 float AShooter::TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent,
- AController *EventInstigator, AActor *DamageCauser)
+						   AController *EventInstigator, AActor *DamageCauser)
 {
+	if (!CanBeDamaged())
+		return 0;
 	Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 
 	if (HealthComponent)
@@ -143,10 +145,10 @@ float AShooter::TakeDamage(float DamageAmount, struct FDamageEvent const &Damage
 			DetachFromControllerPendingDestroy();
 			if (PlayerController)
 			{
-				if (AMainLevelScriptActor *Main = 
-				Cast<AMainLevelScriptActor>(UGameplayStatics::GetActorOfClass(
-					GetWorld(),
-					AMainLevelScriptActor::StaticClass())))
+				if (AMainLevelScriptActor *Main =
+						Cast<AMainLevelScriptActor>(UGameplayStatics::GetActorOfClass(
+							GetWorld(),
+							AMainLevelScriptActor::StaticClass())))
 				{
 					Main->PlayGameOverSequence();
 				}
